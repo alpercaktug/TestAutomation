@@ -2,13 +2,8 @@ require 'page-object'
 require "allure-cucumber"
 
 
-#USER_NAME = ENV['BROWSERSTACK_USERNAME'] || "alperaktu_pbH3hF"
-#ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || "BNXsGQxzoTtzjRoKLHwj"
-
-
-USER_NAME= ENV["LT_USERNAME"] || "alpercktg" #Enter your username here
-ACCESS_KEY= ENV["LT_ACCESS_KEY"] || "IyPfe6Xx2FFwkLBLjpSH2WgmypB2FeOkcdEW1FavvBHwQiYX4L" #Enter your Access Key here
-
+USER_NAME = ENV['BROWSERSTACK_USERNAME'] || "alperaktu_pbH3hF"
+ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || "BNXsGQxzoTtzjRoKLHwj"
 
 BUILD_NAME = "browserstack-demo"
 
@@ -58,15 +53,12 @@ def connect_browserstack
   options = Selenium::WebDriver::Options.send "chrome"
   options.browser_name = bstack_options["browserName"].downcase
   options.add_option('bstack:options', bstack_options)
-  #@browser = Selenium::WebDriver.for(:remote, :url => "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
-  #3                                    :capabilities => options)
-
-  @browser = Selenium::WebDriver.for(:remote, :url => "https://#{USER_NAME}:#{ACCESS_KEY}@hub.lambdatest.com/wd/hub",
+  @browser = Selenium::WebDriver.for(:remote, :url => "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
                                      :capabilities => options)
-
   @browser.manage.window.maximize
-
 end
+
+
 
 
 def run_local
