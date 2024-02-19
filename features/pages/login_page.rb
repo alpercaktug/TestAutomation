@@ -30,4 +30,9 @@ class LoginPage
     @browser.get 'https://app.hotelrunner.com/user/sign_out'
   end
 
+  def login
+    visit_login_page
+    fill_credentials
+    click_login_button
+  end
 end

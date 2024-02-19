@@ -13,3 +13,9 @@ Feature: Authentication functionality tests
   #  Given User login to hotelrunner
    # When User logs in correctly
     #Then User can access to dashboard
+
+
+  Scenario: Go to reservations
+    * Go to reservations page
+
+

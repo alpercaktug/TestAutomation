@@ -13,13 +13,19 @@ class PaymentPage
 
   def fill_contact_information
     self.first_name = "firstname"
+    sleep(1)
     self.last_name = "lastname"
-    self.email = "alperctest@gmail.com"
+    sleep(1)
     self.country = "Turkey"
+    sleep(1)
+    self.email = "alperctest@gmail.com"
+    sleep(1)
     self.phone = "5300905294"
+    sleep(1)
   end
 
   def click_complete
     complete_reservation
+    sleep(1)
   end
 end

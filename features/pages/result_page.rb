@@ -13,10 +13,12 @@ class ResultPage
 
   def click_cancel
     cancel
+    sleep(1)
   end
 
   def click_yes
     yes
+    sleep(1)
   end
 
 end

@@ -8,36 +8,50 @@ class BookingPage
   button(:show_rates, :value => "Show Rates")
   button(:add_room, :value => "Add room")
   button(:continue, :value => "Continue")
-  #button(:checkin_date, :xpath => "//div[@class='day-item' and text()='#{checkin_day}']")
-  #button(:checkout_date, :xpath => "//div[@class='day-item' and text()='#{checkout_day}']")
+  div(:unavailable_message, :class => "message-title")
+  button(:next_month, :class => "button-next-month")
 
   def visit_booking_page
-    @browser.get 'https://alperctest123.hotelrunner.com/bv3/search'
+    @browser.get BaseUrl + "/bv3/search"
+    sleep(1)
   end
 
-  def click_date_picker
+  def select_date(checkin_day, checkout_day)
     date_picker
-  end
 
-  def select_date
-    checkin_date
-    checkout_date
+    #@browser.find_element(xpath: "//div[@class='day-item' and text()='#{checkin_day}']").click
+    #@browser.find_element(xpath: "//div[@class='day-item' and text()='#{checkout_day}']").click
+    #
+    @browser.find_element(xpath: "//div[contains(@aria-label, '#{checkin_day}')]").click
+    @browser.find_element(xpath: "//div[contains(@aria-label, '#{checkout_day}')]").click
   end
 
   def click_search_button
     search
+    sleep(1)
   end
 
   def click_show_rates
     show_rates
+    sleep(1)
   end
 
   def click_add_room
     add_room
+    sleep(1)
   end
 
   def click_continue
     continue
+    sleep(1)
+  end
+
+  def select_room(room_name)
+    @browser.find_element(:css, "button[aria-label='Show rates of#{room_name}']").click
+  end
+
+  def unavailable_present?()
+    unavailable_message.include?("Room unavailable")
   end
 
   def close
