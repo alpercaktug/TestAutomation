@@ -16,8 +16,8 @@ BUILD_NAME = "browserstack-demo"
 Before do
   BaseUrl = "https://alperctest123.hotelrunner.com"
   puts "URL has set to : " + BaseUrl
-  #connect_browserstack
-  run_local
+  connect_browserstack
+  #run_local
 end
 
 After do
