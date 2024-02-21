@@ -35,5 +35,5 @@ jobs:
       - name: Allure report
         uses: afiore/action-allure-report@v0.1.0
         with:
-          results-dir: null
-          report-dir: null
+          results-dir: allure-results
+          report-dir: allure-results
