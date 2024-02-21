@@ -1,4 +1,4 @@
-@smoke @authentication
+@authentication
 Feature: Authentication functionality tests
 
   @login
