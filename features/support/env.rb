@@ -11,8 +11,18 @@ BUILD_NAME = "browserstack-demo"
 Before do
   BaseUrl = "https://alperctest123.hotelrunner.com"
   puts "URL has set to : " + BaseUrl
-  connect_browserstack
+
+  #connect_browserstack
   #run_local
+
+  case ENV['PLATFORM']
+  when 'local'
+    run_local
+  when 'browserstack'
+    connect_browserstack
+  else
+    raise "Unsupported platform: #{ENV['PLATFORM']}"
+  end
 end
 
 After do

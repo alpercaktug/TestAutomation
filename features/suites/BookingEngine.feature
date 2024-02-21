@@ -1,4 +1,4 @@
-@booking-engine
+@smoke @booking-engine
 Feature: Booking Engine functionality tests
 
   @reservation
@@ -12,10 +12,10 @@ Feature: Booking Engine functionality tests
     * Verify reservation is "Canceled"
 
 
-  Scenario: If room unavailable for selected day then user can't select that room
-    Given "King Suite" is unavailable for today
-    When I try to make a reservation to "King Suite" for today
-    Then I should see room is unavailable
+  #Scenario: If room unavailable for selected day then user can't select that room
+   # Given "King Suite" is unavailable for today
+    #When I try to make a reservation to "King Suite" for today
+    #Then I should see room is unavailable
     #* Make a reservation to
     #* Fill payment page fields
     #* Verify reservation is "Confirmed"

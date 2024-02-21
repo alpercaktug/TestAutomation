@@ -59,8 +59,8 @@
     <option name="myRootTask">
       <RakeTaskImpl id="rake">
         <subtasks>
-          <RakeTaskImpl description="" fullCommand="default" id="default" />
-          <RakeTaskImpl description="" fullCommand="test" id="test" />
+          <RakeTaskImpl description="Run Cucumber features" fullCommand="features" id="features" />
+          <RakeTaskImpl description="Run Cucumber features" fullCommand="reservation" id="reservation" />
         </subtasks>
       </RakeTaskImpl>
     </option>

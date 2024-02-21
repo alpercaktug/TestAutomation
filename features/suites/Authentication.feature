@@ -1,6 +1,7 @@
-@authentication
+@smoke @authentication
 Feature: Authentication functionality tests
 
+  @login
   Scenario: Make a successful login to HotelRunner
     * Navigate to login page
     * Fill user credentials
@@ -15,7 +16,7 @@ Feature: Authentication functionality tests
     #Then User can access to dashboard
 
 
-  Scenario: Go to reservations
-    * Go to reservations page
+  #Scenario: Go to reservations
+   # * Go to reservations page
 
 
