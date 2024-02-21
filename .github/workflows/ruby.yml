@@ -1,28 +1,28 @@
+---
 name: Ruby
-
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
+    branches:
+      - main
 permissions:
   contents: read
-
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: ['3.2.0']
-
+        ruby-version:
+          - 3.2.0
     steps:
       - uses: actions/checkout@v3
       - name: Set up Ruby
-        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
+        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf
         with:
           ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          bundler-cache: true
       - name: Install dependencies
         run: |
           gem install bundler
@@ -32,3 +32,8 @@ jobs:
           bundle install
       - name: Run tests
         run: rake run TAGS="@smoke" PLATFORM="browserstack"
+      - name: Allure report
+        uses: afiore/action-allure-report@v0.1.0
+        with:
+          results-dir: null
+          report-dir: null
