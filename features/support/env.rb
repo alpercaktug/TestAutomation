@@ -78,7 +78,7 @@ end
 
 
 AllureCucumber.configure do |config|
-  config.results_directory = "report/allure-results"
+  config.results_directory = "allure-results"
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
   config.logger = Logger.new($stdout, Logger::DEBUG)
@@ -91,7 +91,7 @@ AllureCucumber.configure do |config|
   # additional metadata
   # environment.properties
   config.environment_properties = {
-    custom_attribute: "foo"
+    custom_attribute: "foo test"
   }
   # categories.json
   #config.categories = File.new("my_custom_categories.json")
