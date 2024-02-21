@@ -27,6 +27,7 @@ jobs:
         run: |
           gem install bundler
           gem install cucumber
+          gem install page-object
           bundle install
       - name: Run tests
         run: rake run TAGS="@smoke" PLATFORM="browserstack"
