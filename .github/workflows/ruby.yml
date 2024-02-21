@@ -8,7 +8,8 @@ on:
     branches:
       - main
 permissions:
-  contents: read
+  contents: write # We generate static HTML, JS, CSS so we need write access to the repo
+  pages: write
 jobs:
   test:
     runs-on: ubuntu-latest
