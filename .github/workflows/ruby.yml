@@ -29,6 +29,7 @@ jobs:
           gem install cucumber
           gem install page-object
           gem install allure-cucumber
+          gem install allure
           bundle install
       - name: Run tests
         run: rake run TAGS="@smoke" PLATFORM="browserstack"
