@@ -1,5 +1,5 @@
 ---
-name: Ruby
+name: TestAutomation
 on:
   push:
     branches:
@@ -38,10 +38,10 @@ jobs:
         if: always()
         id: allure-report
         with:
-          allure_results: allure-results
+          allure_results: allure-report/data/history
           gh_pages: gh-pages
           allure_report: allure-report
-          allure_history: allure-history
+          allure_history: allure-report/history
       - name: Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v2

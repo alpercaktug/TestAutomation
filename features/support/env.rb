@@ -12,17 +12,18 @@ Before do
   BaseUrl = "https://alperctest123.hotelrunner.com"
   puts "URL has set to : " + BaseUrl
 
-  connect_browserstack
+  #connect_browserstack
   #run_local
 
-  #case ENV['PLATFORM']
-  #when 'local'
-  #  run_local
-  #when 'browserstack'
-  #  connect_browserstack
-  #else
-  #  raise "Unsupported platform: #{ENV['PLATFORM']}"
-  #end
+  case ENV['PLATFORM']
+  when 'local'
+    run_local
+  when 'browserstack'
+    connect_browserstack
+  else
+    #raise "Unsupported platform: #{ENV['PLATFORM']}"
+    run_local
+  end
 end
 
 After do
@@ -68,9 +69,6 @@ def connect_browserstack
   @browser.manage.window.maximize
 end
 
-
-
-
 def run_local
   @browser = Selenium::WebDriver.for :chrome
   @browser.manage.window.maximize
@@ -78,11 +76,11 @@ end
 
 
 AllureCucumber.configure do |config|
-  config.results_directory = "allure-results"
+  config.results_directory = "allure-report/data/test-cases"
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
   config.logger = Logger.new($stdout, Logger::DEBUG)
-  config.environment = "staging"
+  config.environment = "prod"
 
   # these are used for creating links to bugs or test cases where {} is replaced with keys of relevant items
   #config.link_tms_pattern = "http://www.jira.com/browse/{}"
@@ -91,7 +89,7 @@ AllureCucumber.configure do |config|
   # additional metadata
   # environment.properties
   config.environment_properties = {
-    custom_attribute: "foo test"
+    custom_attribute: "foo test run cucumber"
   }
   # categories.json
   #config.categories = File.new("my_custom_categories.json")

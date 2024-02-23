@@ -60,7 +60,7 @@
       <RakeTaskImpl id="rake">
         <subtasks>
           <RakeTaskImpl description="Run Cucumber features" fullCommand="features" id="features" />
-          <RakeTaskImpl description="Run Cucumber features" fullCommand="reservation" id="reservation" />
+          <RakeTaskImpl description="" fullCommand="run" id="run" />
         </subtasks>
       </RakeTaskImpl>
     </option>

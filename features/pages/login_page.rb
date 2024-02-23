@@ -14,16 +14,13 @@ class LoginPage
   end
 
   def fill_credentials
-    sleep(2)
     self.mail = "alperctest@gmail.com"
-    sleep(2)
     self.password = "mS0451-03"
-    sleep(2)
   end
 
   def click_login_button
     login_button
-    sleep(2)
+
   end
 
   def logout

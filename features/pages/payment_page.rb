@@ -13,19 +13,29 @@ class PaymentPage
 
   def fill_contact_information
     self.first_name = "firstname"
-    sleep(1)
     self.last_name = "lastname"
-    sleep(1)
     self.country = "Turkey"
-    sleep(1)
     self.email = "alperctest@gmail.com"
-    sleep(1)
     self.phone = "5300905294"
-    sleep(1)
+  end
+
+  def fill_contact_information_without(field)
+    self.first_name = field == "firstname" ? nil : "firstname"
+    self.last_name = field == "lastname" ? nil : "lastname"
+    self.country = field == "country" ? "" : "Turkey"
+    self.email = field == "email" ? nil : "alperctest@gmail.com"
+    self.phone = field == "phone" ? nil : "5300905294"
+  end
+
+  def error_message(field)
+    if field == "country"
+      @browser.find_element(css: "small[class='errorExplanation hasError']").text
+    else
+      @browser.find_element(css: "app-form-input[formcontrolname='#{field}'] .errorExplanation").text
+    end
   end
 
   def click_complete
     complete_reservation
-    sleep(1)
   end
 end
