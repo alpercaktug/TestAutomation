@@ -10,5 +10,5 @@ task :run do
   puts "Tests run on: #{platform}"
 
   sh "cucumber --tags #{tags}"
-  #sh "bundle exec allure serve allure-report/data/test-cases"
+  #sh "bundle exec allure serve allure-report/allure-result"
 end

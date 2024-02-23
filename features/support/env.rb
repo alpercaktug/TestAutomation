@@ -76,7 +76,7 @@ end
 
 
 AllureCucumber.configure do |config|
-  config.results_directory = "allure-report/data/test-cases"
+  config.results_directory = "allure-report/allure-result"
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
   config.logger = Logger.new($stdout, Logger::DEBUG)
