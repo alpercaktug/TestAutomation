@@ -10,7 +10,7 @@ Feature: Booking Engine functionality tests
     * Cancel reservation on result page
     * Verify reservation is "Canceled"
 
-
+  @test
   Scenario Outline: : Reservation detail information should return correct data
     Given I navigate to booking page
     When I select check-in and check-out day for <night> night
