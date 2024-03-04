@@ -14,8 +14,8 @@ class LoginPage
   end
 
   def fill_credentials
-    self.mail = ""
-    self.password = ""
+    self.mail = "alperctest@gmail.com"
+    self.password = "mS0451-03"
   end
 
   def click_login_button

@@ -34,9 +34,11 @@
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v3.5.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types-data (v3.2024.0206, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_mime (v1.1.5, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="minitest (v5.22.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_test (v1.1.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="page-object (v2.3.1, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="page_navigation (v0.10, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="power_assert (v2.0.3, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v13.1.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="regexp_parser (v2.9.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="require_all (v3.0.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
@@ -50,6 +52,7 @@
     <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v4.17.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="sys-uname (v1.2.3, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="systemu (v2.6.5, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="test-unit (v3.6.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="uuid (v2.3.9, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="watir (v7.3.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket (v1.2.10, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
@@ -59,7 +62,6 @@
     <option name="myRootTask">
       <RakeTaskImpl id="rake">
         <subtasks>
-          <RakeTaskImpl description="Run Cucumber features" fullCommand="features" id="features" />
           <RakeTaskImpl description="" fullCommand="run" id="run" />
         </subtasks>
       </RakeTaskImpl>

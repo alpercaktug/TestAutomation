@@ -1,15 +1,17 @@
 require 'page-object'
 require "allure-cucumber"
-
+require 'page-object/page_factory'
+World(PageObject::PageFactory)
 
 USER_NAME = ENV['BROWSERSTACK_USERNAME'] || "alperaktu_pbH3hF"
 ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || "BNXsGQxzoTtzjRoKLHwj"
 
 BUILD_NAME = "browserstack-demo"
 
+BaseUrl = "https://alperctest123.hotelrunner.com"
 
 Before do
-  BaseUrl = "https://alperctest123.hotelrunner.com"
+
   puts "URL has set to : " + BaseUrl
 
   #connect_browserstack
@@ -67,11 +69,22 @@ def connect_browserstack
   @browser = Selenium::WebDriver.for(:remote, :url => "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
                                      :capabilities => options)
   @browser.manage.window.maximize
+  @browser.manage.timeouts.implicit_wait = 10
+
 end
 
 def run_local
-  @browser = Selenium::WebDriver.for :chrome
+  options = Selenium::WebDriver::Chrome::Options.new
+  #options.add_argument('--headless')
+  #options.add_argument('--disable-gpu') # This is needed to run headless on certain systems
+
+  @browser = Selenium::WebDriver.for :chrome, options: options
   @browser.manage.window.maximize
+  #@browser.manage.timeouts.implicit_wait = 10
+
+  #
+  #@browser = Watir::Browser.new
+  #@browser.window.maximize
 end
 
 
@@ -89,7 +102,7 @@ AllureCucumber.configure do |config|
   # additional metadata
   # environment.properties
   config.environment_properties = {
-    custom_attribute: "foo test run cucumber"
+    custom_attribute: "foo test run 11.37"
   }
   # categories.json
   #config.categories = File.new("my_custom_categories.json")

@@ -17,6 +17,7 @@ class PaymentPage
     self.country = "Turkey"
     self.email = "alperctest@gmail.com"
     self.phone = "5300905294"
+
   end
 
   def fill_contact_information_without(field)
