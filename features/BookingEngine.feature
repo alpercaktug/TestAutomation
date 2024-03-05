@@ -11,7 +11,7 @@ Feature: Booking Engine functionality tests
     And Verify reservation is "Canceled"
 
 
-  Scenario Outline: : Reservation detail information should return correct data
+  Scenario Outline: Reservation detail information should return correct data
     Given I navigate to booking page
     When I select check-in and check-out day for <night> night
     Then I should see correct <night> information on reservation detail
@@ -45,17 +45,17 @@ Feature: Booking Engine functionality tests
     And I should see 1 "King Suite" has added on reservation details
 
 
-  #Scenario: Room count in reservation detail should return correct
-  #  Given I navigate to booking page
-  #    * I add 1 "Classic Room" for 1 night
-  #    * I add 1 "King Suite" for 1 night
-  #  When I complete reservation
-  #  Then Verify reservation is "Confirmed"
-  #  And I should see 1 "Classic Room" has added on reservation details
-  #  And I should see 1 "King Suite" has added on reservation details
-  #  When Cancel reservation on result page
-  #  Then Verify reservation is "Canceled"
 
+  Scenario: Room count in reservation detail should return correct
+    Given I navigate to booking page
+      * I add 1 "Classic Room" for 1 night
+      * I add 1 "King Suite" for 1 night
+    When I complete reservation
+    Then Verify reservation is "Confirmed"
+    And I should see 1 "Classic Room" has added on reservation details
+    And I should see 1 "King Suite" has added on reservation details
+    When Cancel reservation on result page
+    Then Verify reservation is "Canceled"
 
 
   #Scenario: If room unavailable for selected day then user can't select that room

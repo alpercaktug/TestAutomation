@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 chrome_driver_processes = `ps aux | grep chromedriver | grep -v grep`
 
 if chrome_driver_processes.empty?
@@ -10,4 +12,3 @@ else
     puts "Terminated ChromeDriver process with PID #{pid}."
   end
 end
-

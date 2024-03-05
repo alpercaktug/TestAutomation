@@ -1,27 +1,30 @@
 # frozen_string_literal: true
+
 require_relative 'base_page'
 
 class BookingPage < BasePage
   include PageObject
 
-  button(:date_picker, :xpath => '/html/body/app-root/div/app-search/div/app-search-bar/div/app-datepicker/div/button')
-  button(:search, :value => "Search")
-  button(:show_rates, :value => "Show Rates")
-  button(:add_room, :value => "Add room")
-  button(:continue, :value => "Continue")
-  div(:unavailable_message, :class => "message-title")
-  button(:next_month, :class => "button-next-month")
-  text_field(:guest_info, :xpath => "//div[@class='guest-info']")
-  div(:room_cart_list, :xpath => "//div[@class='cart-list']/div[1]")
-  button(:room_increment, :xpath=> "//button[@class='increment']")
-  button(:rooms_and_guests_dropdown, :id => "dropdownMenuButtonOne")
+  button(:date_picker, xpath: '/html/body/app-root/div/app-search/div/app-search-bar/div/app-datepicker/div/button')
+  button(:search, value: 'Search')
+  button(:show_rates, value: 'Show Rates')
+  button(:add_room, value: 'Add room')
+  button(:continue, value: 'Continue')
+  div(:unavailable_message, class: 'message-title')
+  button(:next_month, class: 'button-next-month')
+  text_field(:guest_info, xpath: "//div[@class='guest-info']")
+  div(:room_cart_list, xpath: "//div[@class='cart-list']/div[1]")
+  button(:room_increment, xpath: "//button[@class='increment']")
+  button(:rooms_and_guests_dropdown, id: 'dropdownMenuButtonOne')
   link(:add_room_link, class: 'more-room')
 
   # Do you have the right number of rooms?
   button(:continue_with_different_room_search, class: 'prmry')
 
+  div(:available_room_count, xpath: "count(//div[@class='search-result-container']/child::app-room-box[@roomlisttype='available']/*)")
+
   def visit_booking_page
-    @browser.get BaseUrl + "/bv3/search"
+    @browser.get "#{BaseUrl}/bv3/search"
   end
 
   def click_date_picker
@@ -29,20 +32,17 @@ class BookingPage < BasePage
   end
 
   def select_date(night_count)
-
     checkin_day = Date.today
     checkout_day = checkin_day + night_count
 
-    checkin_day = checkin_day.strftime("%B %-e")
-    checkout_day = checkout_day.strftime("%B %-e")
+    checkin_day = checkin_day.strftime('%B %-e')
+    checkout_day = checkout_day.strftime('%B %-e')
 
     puts checkin_day
     puts checkout_day
 
     click(:xpath, "//div[contains(@aria-label, '#{checkin_day}')]")
-    if night_count > 31
-      click(:xpath, "/html/body/div[3]/div[1]/div/div[2]/div[1]/button[2]")
-    end
+    click(:xpath, '/html/body/div[3]/div[1]/div/div[2]/div[1]/button[2]') if night_count > 31
     click(:xpath, "//div[contains(@aria-label, '#{checkout_day}')]")
   end
 
@@ -63,11 +63,11 @@ class BookingPage < BasePage
   end
 
   def click_hide_rates(room_name)
-    click(:css ,"button[aria-label='Hide rates of#{room_name}']")
+    click(:css, "button[aria-label='Hide rates of#{room_name}']")
   end
 
   def unavailable_present?
-    unavailable_message.include?("Room unavailable")
+    unavailable_message.include?('Room unavailable')
   end
 
   def guest_info
@@ -84,10 +84,6 @@ class BookingPage < BasePage
     room_increment
   end
 
-  def close
-    @browser.close
-  end
-
   def set_rooms_and_guests
     rooms_and_guests_dropdown
     add_room_link
@@ -97,4 +93,8 @@ class BookingPage < BasePage
     continue_with_different_room_search
   end
 
+  def get_available_room_count
+    sleep 5
+    element_count_with_js('//div[@class="search-result-container"]/child::app-room-box[@roomlisttype="unavailable"]/*')
+  end
 end

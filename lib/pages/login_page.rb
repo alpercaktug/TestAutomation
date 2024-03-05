@@ -3,24 +3,23 @@
 class LoginPage
   include PageObject
 
-  text_field(:mail, id: "user_email")
-  text_field(:password, id: "user_password")
-  button(:login_button, name: "commit")
+  text_field(:mail, id: 'user_email')
+  text_field(:password, id: 'user_password')
+  button(:login_button, name: 'commit')
   div(:logout_button, value: 'Log out')
-  link(:profile, title:"Profile")
+  link(:profile, title: 'Profile')
 
   def visit_login_page
     @browser.get 'https://app.hotelrunner.com/login'
   end
 
   def fill_credentials
-    self.mail = "alperctest@gmail.com"
-    self.password = "mS0451-03"
+    self.mail = 'alperctest@gmail.com'
+    self.password = 'mS0451-03'
   end
 
   def click_login_button
     login_button
-
   end
 
   def logout
