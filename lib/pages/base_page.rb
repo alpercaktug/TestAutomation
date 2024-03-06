@@ -5,6 +5,16 @@ class BasePage
     @browser = driver
   end
 
+  def assert_expected_title(expected_title)
+    wait_until { browser.title == expected_title }
+    raise "Title mismatch! Expected: #{expected_title}, Actual: #{browser.title}" unless browser.title == expected_title
+  end
+
+  def assert_expected_url(expected_url)
+    wait_until { browser.current_url == expected_url }
+    raise "URL mismatch! Expected: #{expected_url}, Actual: #{browser.current_url}" unless browser.current_url == expected_url
+  end
+
   # Wait and click
   def click(by, value)
     element = wait_for_element(by, value)
@@ -16,11 +26,11 @@ class BasePage
     element.text
   end
 
-  def wait_and_get_element(by, value)
+  def get_element(by, value)
     wait_for_element(by, value)
   end
 
-  def wait_and_get_elements(by, value)
+  def get_elements(by, value)
     wait = Selenium::WebDriver::Wait.new(timeout: 10)
 
     elements = wait.until { @browser.find_elements(by, value) }

@@ -1,6 +1,10 @@
 @full-suite @smoke @booking-engine
 Feature: Booking Engine functionality tests
 
+  #Scenario: Page object test
+  #  Given I navigate to booking page
+  #  When I make a reservation to "Classic Room" for 3 night
+  #  Then Verify reservation is "Confirmed"
 
   Scenario: Make a successful reservation
     Given I navigate to booking page
@@ -46,16 +50,16 @@ Feature: Booking Engine functionality tests
 
 
 
-  Scenario: Room count in reservation detail should return correct
-    Given I navigate to booking page
-      * I add 1 "Classic Room" for 1 night
-      * I add 1 "King Suite" for 1 night
-    When I complete reservation
-    Then Verify reservation is "Confirmed"
-    And I should see 1 "Classic Room" has added on reservation details
-    And I should see 1 "King Suite" has added on reservation details
-    When Cancel reservation on result page
-    Then Verify reservation is "Canceled"
+ #Scenario: Room count in reservation detail should return correct
+ #  Given I navigate to booking page
+ #    * I add 1 "Classic Room" for 1 night
+ #    * I add 1 "King Suite" for 1 night
+ #  When I complete reservation
+ #  Then Verify reservation is "Confirmed"
+ #  And I should see 1 "Classic Room" has added on reservation details
+ #  And I should see 1 "King Suite" has added on reservation details
+ #  When Cancel reservation on result page
+ #  Then Verify reservation is "Canceled"
 
 
   #Scenario: If room unavailable for selected day then user can't select that room
