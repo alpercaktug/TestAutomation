@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../../lib/pages/login_page'
-require_relative '../../lib/pages/dashboard_page'
+
 
 When(/^Navigate to login page$/) do
   @login_page = LoginPage.new(@browser)
@@ -24,8 +24,3 @@ When(/^Navigate to logout$/) do
   @login_page.logout
 end
 
-When(/^Go to reservations page$/) do
-  @dashboard_page = DashboardPage.new(@browser)
-  @dashboard_page.visit_dashboard
-  @dashboard_page.navigate_reservations
-end

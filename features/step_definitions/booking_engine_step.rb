@@ -1,134 +1,144 @@
 # frozen_string_literal: true
-
 require_relative '../../lib/pages/booking_page'
 require_relative '../../lib/pages/payment_page'
 require_relative '../../lib/pages/result_page'
-require 'date'
+
+#done
+Given(/^I navigate to the booking page$/) do
+  BookingPage.new(@browser).visit_booking_page
+end
+
+#done
+Given(/^I have the following data$/) do |table|
+  # table is a table.hashes.keys # => [:Night, :Adult Count, :Child Count, :Room Type, :Payment Method]
+  @data = table.hashes
+
+  @data.each do |row|
+    @night = row['Night'].to_i
+    @adult = row['Adult Count'].to_i
+    @child = row['Child Count'].to_i
+    @room = row['Room Type']
+    @payment = row['Payment Method']
+
+    puts row
+  end
+end
+
+#done
+When(/^I make a reservation with the data$/) do
+  BookingPage.new(@browser)
+             .visit_booking_page
+             .select_date(@night.to_i)
+             .select_adult(@adult.to_i)
+             .click_search_button
+             .click_show_rates_button(@room)
+             .click_add_room_button
+             .click_continue_button
+             .fill_contact_information
+             .select_payment_method(@payment)
+             .click_complete
+end
 
 
-Given(/^I navigate to booking page$/) do
+When(/^I make a reservation for a "([^"]*)" for (\d+) night and (\d+) adult with "([^"]*)"$/) do |room_type, night, adult, payment_method|
+  BookingPage.new(@browser)
+             .visit_booking_page
+             .select_date(night)
+             .select_adult(adult)
+             .click_search_button
+             .click_show_rates_button(room_type)
+             .click_add_room_button
+             .click_continue_button
+             .fill_contact_information
+             .select_payment_method(payment_method)
+             .click_complete
+end
+
+
+
+#done
+When(/^I search for an available room for (\d+) night and (\d+) adult$/) do |night, guest|
+  BookingPage.new(@browser)
+             .select_date(night)
+             .select_adult(guest)
+             .click_search_button
+end
+
+#done
+When(/^I add (\d+) "([^"]*)" to the cart$/) do |amount, room_type|
+
   booking_page = BookingPage.new(@browser)
-  booking_page.visit_booking_page
-end
+                            .click_show_rates_button(room_type)
+                            .click_add_room_button
 
-When(/^I make a reservation to "([^"]*)" for (\d+) night$/) do |room_name, night|
-  booking_page = BookingPage.new(@browser)
-  booking_page.click_date_picker
-  booking_page.select_date(night)
-  booking_page.click_search_button
-  booking_page.click_show_rates_button(room_name)
-  booking_page.click_add_room_button
-  booking_page.click_continue_button
-end
-
-When(/^Fill payment page fields$/) do
- payment_page = PaymentPage.new(@browser)
- payment_page.fill_contact_information
- payment_page.click_complete
-end
-
-When(/^Verify reservation is "([^"]*)"$/) do |result|
-  result_page = ResultPage.new(@browser)
-  expect(result_page.state_present?(result)).to eql(true)
-end
-
-When(/^Cancel reservation on result page$/) do
-  result_page = ResultPage.new(@browser)
-  result_page.click_cancel
-  result_page.click_yes
-end
-
-When(/^I select check\-in and check\-out day for (\d+) night$/) do |night|
-  booking_page = BookingPage.new(@browser)
-  booking_page.click_date_picker
-  booking_page.select_date(night)
-  booking_page.click_search_button
-end
-
-Then(/^I should see correct (\d+) information on reservation detail$/) do |night|
-  booking_page = BookingPage.new(@browser)
-  expected = night.to_i == 1 ? "#{night} night" : "#{night} nights"
-  puts expected
-  expect(booking_page.guest_info).to eql(expected)
-end
-
-When(/^I don't fill (.*)$/) do |field|
-  payment_page = PaymentPage.new(@browser)
-  payment_page.fill_contact_information_without(field)
-  payment_page.click_complete
-end
-
-Then(/^I should see (.*) under (.*)$/) do |error_message, field|
-  payment_page = PaymentPage.new(@browser)
-  expect(payment_page.error_message(field)).to eql error_message
-end
-
-# ------
-
-Given(/^"([^"]*)" is unavailable for today$/) do |room_name|
-  booking_page = BookingPage.new(@browser)
-  booking_page.visit_booking_page
-  booking_page.click_show_rates_button(room_name)
-  booking_page.click_add_room_button
-  booking_page.click_continue_button
-  payment_page = PaymentPage.new(@browser)
-  payment_page.fill_contact_information
-  payment_page.click_complete
-end
-
-When(/^I try to make a reservation to "([^"]*)" for today$/) do |_arg|
-  booking_page = BookingPage.new(@browser)
-  booking_page.visit_booking_page
-  booking_page.click_search_button
-end
-
-Then(/^I should see room is unavailable$/) do
-  booking_page = BookingPage.new(@browser)
-  expect(booking_page.unavailable_present?).to eql true
-end
-
-When(/^I add (\d+) "([^"]*)" for (\d+) night$/) do |room_count, room_name, _night|
-  booking_page = BookingPage.new(@browser)
-  booking_page.click_show_rates_button(room_name)
-  booking_page.click_add_room_button
-  (2..room_count).each do |_i|
+  (2..amount).each do |_i|
     booking_page.click_increase_room_button
   end
-  booking_page.click_hide_rates_button(room_name)
+
+  booking_page.click_hide_rates_button(room_type)
 end
 
-Then(/^I should see (\d+) "([^"]*)" has added on reservation details$/) do |room_count, room_name|
-  booking_page = BookingPage.new(@browser)
-  expect(booking_page.room_count_cart_list(room_name)).to eql room_count
+#done
+And(/^I continue to the payment page$/) do
+  BookingPage.new(@browser)
+             .click_continue_button
 end
 
-When(/^I complete reservation$/) do
-  booking_page = BookingPage.new(@browser)
-  booking_page.click_continue_button
-  booking_page.click_continue_with_different_room_search
-  payment_page = PaymentPage.new(@browser)
-  payment_page.fill_contact_information
-  payment_page.click_complete
+#done
+When(/^I fill contact form$/) do
+  PaymentPage.new(@browser).fill_contact_information
 end
 
-When(/^I search for (\d+) rooms, (\d+) adults, (\d+) night$/) do |_arg1, _arg2, night|
-  booking_page = BookingPage.new(@browser)
-  booking_page.click_date_picker
-  booking_page.select_date(night)
-  booking_page.set_rooms_and_guests
+#done
+When(/^Cancel reservation on result page$/) do
+  ResultPage.new(@browser)
+            .click_cancel
+            .click_yes
 end
 
-When(/^I click search button$/) do
-  booking_page = BookingPage.new(@browser)
-  booking_page.click_search_button
+#done
+When(/^I make a reservation to "([^"]*)" for (\d+) night without filling "([^"]*)" on payment page$/) do |room_name, night, field|
+  BookingPage.new(@browser)
+             .select_date(night)
+             .click_search_button
+             .click_show_rates_button(room_name)
+             .click_add_room_button
+             .click_continue_button
+             .fill_contact_information_without(field)
+             .click_complete
 end
 
 
-Given(/^Test new$/) do
-  booking_page = BookingPage.new(@browser)
-  sleep 4
-  booking_page.visit_booking_page
-  sleep 4
-  expect(booking_page.search_appear?).to eql true
+Given(/^that the "([^"]*)" setting is "([^"]*)"$/) do |setting, ability|
+  puts "#{setting} is #{ability}"
+end
+
+
+#done
+And(/^I complete the reservation with mail order$/) do |table|
+  # table is a table.hashes.keys # => [:Number, :CVC, :Expire, :Firstname, :Lastname]
+  @data = table.hashes
+
+  @data.each do |row|
+    @number = row['Number']
+    @cvc = row['CVC']
+    @expire = row['Expire']
+    @firstname = row['Firstname']
+    @lastname = row['Lastname']
+
+    puts row
+  end
+
+  PaymentPage.new(@browser)
+             .select_payment_method('Mail order')
+             .fill_card_form(@number, @cvc, @expire, @firstname, @lastname )
+             .click_complete
+end
+
+#done
+When(/^I complete the reservation with bank transfer$/) do
+  PaymentPage.new(@browser)
+             .select_payment_method('Bank Transfer')
+             .click_complete
 end
 

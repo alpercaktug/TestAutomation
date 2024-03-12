@@ -3,7 +3,12 @@
 require 'page-object'
 require 'allure-cucumber'
 require 'page-object/page_factory'
+require 'logger'
+
+
+
 World(PageObject::PageFactory)
+
 
 USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperaktu_pbH3hF'
 ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'BNXsGQxzoTtzjRoKLHwj'
@@ -12,11 +17,11 @@ BUILD_NAME = 'browserstack-demo'
 
 BaseUrl = 'https://alperctest123.hotelrunner.com'
 
+@logger = Logger.new($stdout) # create a new logger that writes to the console
+
+
 Before do
   puts "URL has set to : #{BaseUrl}"
-
-  # connect_browserstack
-  # run_local
 
   case ENV['PLATFORM']
   when 'local'
@@ -31,6 +36,12 @@ end
 
 After do
   @browser.quit
+end
+
+After('@cancel') do
+  step 'Cancel reservation on result page'
+  step 'Verify reservation is "Canceled"'
+  puts 'Reservation canceled'
 end
 
 def connect_browserstack
