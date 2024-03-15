@@ -32,4 +32,10 @@ class Helper
 
     @browser.execute_script(script, inner_text)
   end
+
+
+  def convert_label_to_price (price_label)
+    amount_with_currency = price_label
+    amount_with_currency.gsub(/[^\d.-]/, '').to_f
+  end
 end

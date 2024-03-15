@@ -8,9 +8,6 @@ class ResultPage
   button(:yes, class: 'prmry')
   div(:result, xpath: '//div[contains(@class, "success")]')
 
-  def state_present?(state)
-    result_state.include?(state)
-  end
 
   def click_cancel
     cancel
@@ -21,6 +18,11 @@ class ResultPage
     yes
     self
   end
+
+  def state_present?(state)
+    result_state.include?(state)
+  end
+
 
   def result
     puts result_element.text

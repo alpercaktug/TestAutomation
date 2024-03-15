@@ -3,21 +3,24 @@
 class PaymentPage < BasePage
   include PageObject
 
+  # Contact Form Locators
   text_field(:first_name, name: 'firstname')
   text_field(:last_name, name: 'lastname')
   text_field(:email, name: 'email')
   text_field(:phone, name: 'phone')
   select(:country, name: 'country_id')
-  button(:complete_reservation, name: 'button')
-  div(:result, class: 'state')
+  button(:complete_reservation, xpath: '//button[@name="button"]')
 
+  # Mail Order Form locators
   text_field(:number, name: 'number')
-  text_field(:expiry, name: 'expiry')
+  text_field(:expire, name: 'expiry')
   text_field(:cvc, name: 'cvc')
   text_field(:firstname, name: 'first-name')
   text_field(:lastname, name: 'last-name')
 
+  # Label & Message Locators
   div(:invalid_card_message, css: 'div[class$="ng-star-inserted"]')
+  div(:result, class: 'state')
 
   def fill_contact_information
     self.first_name = 'firstname'
@@ -37,56 +40,21 @@ class PaymentPage < BasePage
     self
   end
 
-  def error_message
-    get_text(:css, "small[class='errorExplanation hasError']")
-  end
-
-  def click_complete
-    complete_reservation
-    ResultPage.new(@browser)
-  end
-
-
-  def invalid_card?
-    puts invalid_card_message
-    invalid_card_message?
-  end
-
-  def fill_number(number)
+  def fill_card_form(number, cvc, expire, firstname, lastname)
     self.number = number
-    self
-  end
-  def fill_expiry(expiry)
-    self.expiry = expiry
-    self
-  end
-  def fill_cvc(cvc)
+    self.expire = expire
     self.cvc = cvc
-    self
-  end
-  def fill_firstname(firstname)
     self.firstname = firstname
-    self
-  end
-  def fill_lastname(lastname)
     self.lastname = lastname
     self
   end
 
-  def fill_card_form(number, cvc, expire, firstname, lastname)
-    fill_number number
-    fill_expiry expire
-    fill_cvc cvc
-    fill_firstname firstname
-    fill_lastname lastname
-  end
-
   def select_payment_method(payment_method)
     case payment_method
-    when 'Pay at the property'
-      click(:xpath, '//a[@id="935790758-link"]/span')
-    when 'Mail order'
-      click(:xpath, '//a[@id="935791103-link"]/span')
+    when 'Cash'
+      click(:xpath, '//a[@id="935795127-link"]/span')
+    when 'Mail Order'
+      click(:xpath, '//a[@id="935795143-link"]/span')
     when 'Bank Transfer'
       click(:xpath, '//a[@id="935790797-link"]/span')
     else
@@ -95,4 +63,17 @@ class PaymentPage < BasePage
     self
   end
 
+  def click_complete
+    complete_reservation
+    ResultPage.new(@browser)
+  end
+
+  def error_message
+    get_text(:css, "small[class='errorExplanation hasError']")
+  end
+
+  def invalid_card?
+    puts invalid_card_message
+    invalid_card_message?
+  end
 end

@@ -2,13 +2,16 @@
 require_relative '../../lib/pages/booking_page'
 require_relative '../../lib/pages/payment_page'
 require_relative '../../lib/pages/result_page'
+require_relative '../../lib/pages/booking_engine_settings_page'
 
-#done
-Given(/^I navigate to the booking page$/) do
+# NAVIGATE TO BOOKING PAGE
+# done
+Given(/^Navigate to the booking page$/) do
   BookingPage.new(@browser).visit_booking_page
 end
 
-#done
+# GET DATA FROM TABLE
+# done
 Given(/^I have the following data$/) do |table|
   # table is a table.hashes.keys # => [:Night, :Adult Count, :Child Count, :Room Type, :Payment Method]
   @data = table.hashes
@@ -24,8 +27,9 @@ Given(/^I have the following data$/) do |table|
   end
 end
 
-#done
-When(/^I make a reservation with the data$/) do
+# MAKE COMPLETE RESERVATION WITH DATA TABLE
+# done
+When(/^Make a reservation with the data$/) do
   BookingPage.new(@browser)
              .visit_booking_page
              .select_date(@night.to_i)
@@ -34,13 +38,14 @@ When(/^I make a reservation with the data$/) do
              .click_show_rates_button(@room)
              .click_add_room_button
              .click_continue_button
-             .fill_contact_information
+  PaymentPage.new(@browser).fill_contact_information
              .select_payment_method(@payment)
              .click_complete
 end
 
-
-When(/^I make a reservation for a "([^"]*)" for (\d+) night and (\d+) adult with "([^"]*)"$/) do |room_type, night, adult, payment_method|
+# MAKE COMPLETE RESERVATION WITH PARAMETERS
+# done
+When(/^Make a reservation for a "([^"]*)" for (\d+) night and (\d+) adult with "([^"]*)"$/) do |room_type, night, adult, payment_method|
   BookingPage.new(@browser)
              .visit_booking_page
              .select_date(night)
@@ -49,23 +54,31 @@ When(/^I make a reservation for a "([^"]*)" for (\d+) night and (\d+) adult with
              .click_show_rates_button(room_type)
              .click_add_room_button
              .click_continue_button
-             .fill_contact_information
+  PaymentPage.new(@browser).fill_contact_information
              .select_payment_method(payment_method)
              .click_complete
 end
 
 
-
-#done
-When(/^I search for an available room for (\d+) night and (\d+) adult$/) do |night, guest|
+# SELECT ADULT
+# done
+When(/^Search for an available room for (\d+) adult$/) do |adult|
   BookingPage.new(@browser)
-             .select_date(night)
-             .select_adult(guest)
+             .select_adult(adult)
              .click_search_button
 end
 
-#done
-When(/^I add (\d+) "([^"]*)" to the cart$/) do |amount, room_type|
+# SELECT CHECKIN-CHECKOUT
+# done
+When(/^Search for an available room for (\d+) night$/) do |night|
+  BookingPage.new(@browser)
+             .select_date(night)
+             .click_search_button
+end
+
+# ADD ROOM
+# done
+When(/^Add (\d+) "([^"]*)" to the cart$/) do |amount, room_type|
 
   booking_page = BookingPage.new(@browser)
                             .click_show_rates_button(room_type)
@@ -78,44 +91,51 @@ When(/^I add (\d+) "([^"]*)" to the cart$/) do |amount, room_type|
   booking_page.click_hide_rates_button(room_type)
 end
 
-#done
-And(/^I continue to the payment page$/) do
+# CONTINUE
+# wip (not just payment page)
+And(/^Continue to the payment page$/) do
   BookingPage.new(@browser)
              .click_continue_button
 end
 
-#done
-When(/^I fill contact form$/) do
+# done
+When(/Fill contact form$/) do
   PaymentPage.new(@browser).fill_contact_information
 end
 
-#done
+# CANCEL
+# done
 When(/^Cancel reservation on result page$/) do
   ResultPage.new(@browser)
             .click_cancel
             .click_yes
 end
 
-#done
-When(/^I make a reservation to "([^"]*)" for (\d+) night without filling "([^"]*)" on payment page$/) do |room_name, night, field|
+# SPECIAL
+# done
+When(/^Make a reservation to "([^"]*)" for (\d+) night without filling "([^"]*)" on payment page$/) do |room_name, night, field|
   BookingPage.new(@browser)
              .select_date(night)
              .click_search_button
              .click_show_rates_button(room_name)
              .click_add_room_button
              .click_continue_button
-             .fill_contact_information_without(field)
+  PaymentPage.new(@browser).fill_contact_information_without(field)
              .click_complete
 end
 
-
+# SETTINGS (NEW)
+# wip
 Given(/^that the "([^"]*)" setting is "([^"]*)"$/) do |setting, ability|
   puts "#{setting} is #{ability}"
+  settings = BookingEngineSettingsPage.new(@browser)
+  settings.visit
+  settings.enable_auto_confirm_paid_reservations
 end
 
-
-#done
-And(/^I complete the reservation with mail order$/) do |table|
+# PAYMENT (MAIL ORDER)
+# done
+And(/^Complete the reservation with mail order$/) do |table|
   # table is a table.hashes.keys # => [:Number, :CVC, :Expire, :Firstname, :Lastname]
   @data = table.hashes
 
@@ -128,17 +148,22 @@ And(/^I complete the reservation with mail order$/) do |table|
 
     puts row
   end
-
   PaymentPage.new(@browser)
-             .select_payment_method('Mail order')
-             .fill_card_form(@number, @cvc, @expire, @firstname, @lastname )
+             .select_payment_method('Mail Order')
+             .fill_card_form(@number, @cvc, @expire, @firstname, @lastname)
              .click_complete
 end
 
-#done
-When(/^I complete the reservation with bank transfer$/) do
+# PAYMENT (BANK TRANSFER)
+# done
+When(/^Complete the reservation with bank transfer$/) do
   PaymentPage.new(@browser)
              .select_payment_method('Bank Transfer')
              .click_complete
 end
 
+# APPLY COUPON CODE
+# done
+And(/^Apply a coupon code that "([^"]*)"$/) do |code|
+  BookingPage.new(@browser).apply_coupon_code code
+end
