@@ -63,6 +63,7 @@ class BasePage
     xpath_expression = "count(#{xpath})"
     element_count = browser.execute_script("return document.evaluate('#{xpath_expression}', document, null, XPathResult.NUMBER_TYPE, null).numberValue;")
     puts "Number of matching elements (using count()): #{element_count}"
+    element_count
   end
 
   def close

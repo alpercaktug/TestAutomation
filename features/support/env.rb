@@ -3,20 +3,19 @@
 require 'page-object'
 require 'allure-cucumber'
 require 'page-object/page_factory'
+require 'logger'
+
 World(PageObject::PageFactory)
 
-USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperaktu_pbH3hF'
-ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'BNXsGQxzoTtzjRoKLHwj'
+USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_HS7UTE'
+ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'en7xgub7mnqqDwdVQV6i'
 
-BUILD_NAME = 'browserstack-demo'
+BaseUrl = 'https://testautomation.hotelrunner.com'
 
-BaseUrl = 'https://alperctest123.hotelrunner.com'
-
-Before do
+Before do |scenario|
+  @current_scenario_name = scenario.name
   puts "URL has set to : #{BaseUrl}"
-
-  # connect_browserstack
-  # run_local
+  puts "Running Scenario: #{@current_scenario_name}"
 
   case ENV['PLATFORM']
   when 'local'
@@ -25,7 +24,7 @@ Before do
     connect_browserstack
   else
     # raise "Unsupported platform: #{ENV['PLATFORM']}"
-    run_local
+    connect_browserstack
   end
 end
 
@@ -33,34 +32,44 @@ After do
   @browser.quit
 end
 
+After('@cancel') do
+  step 'Cancel reservation on result page'
+  step 'I should see the reservation is "Canceled"'
+  puts 'Reservation canceled'
+end
+
 def connect_browserstack
   caps = [{
-            'browserName' => 'Chrome',
-            'browserVersion' => 'latest',
-            'os' => 'OS X',
-            'osVersion' => 'Sonoma',
-            'buildName' => BUILD_NAME,
-            'sessionName' => 'Ruby thread 1',
-            'debug' => 'true',
-            'networkLogs' => 'true',
-            'consoleLogs' => 'info'
-          },
-          {
-            'browserName' => 'Safari',
-            'browserVersion' => '15.6',
-            'os' => 'OS X',
-            'osVersion' => 'Monterey',
-            'buildName' => BUILD_NAME,
-            'sessionName' => 'Ruby thread 2'
-          },
-          {
-            'browserName' => 'Chromium',
-            'deviceOrientation' => 'portrait',
-            'deviceName' => 'iPhone 13',
-            'osVersion' => '15',
-            'buildName' => BUILD_NAME,
-            'sessionName' => 'Ruby thread 3'
-          }]
+    'browserName' => 'Chrome',
+    'browserVersion' => 'latest',
+    'os' => 'OS X',
+    'osVersion' => 'Sonoma',
+    'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
+    'sessionName' => "#{@current_scenario_name} -- Chrome",
+    'debug' => 'true',
+    'networkLogs' => 'true',
+    'consoleLogs' => 'info'
+  }, {
+    'browserName' => 'Safari',
+    'browserVersion' => '15.6',
+    'os' => 'OS X',
+    'osVersion' => 'Monterey',
+    'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
+    'sessionName' => "#{@current_scenario_name} -- Safari",
+    'debug' => 'true',
+    'networkLogs' => 'true',
+    'consoleLogs' => 'info'
+  }, {
+    'browserName' => 'firefox',
+    'browserVersion' => 'latest-beta',
+    'os' => 'Windows',
+    'osVersion' => '10',
+    'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
+    'sessionName' => "#{@current_scenario_name} -- firefox",
+    'debug' => 'true',
+    'networkLogs' => 'true',
+    'consoleLogs' => 'info'
+  }]
 
   bstack_options = caps[0]
 
@@ -69,22 +78,17 @@ def connect_browserstack
   options.add_option('bstack:options', bstack_options)
   @browser = Selenium::WebDriver.for(:remote, url: "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
                                               capabilities: options)
+
   @browser.manage.window.maximize
   @browser.manage.timeouts.implicit_wait = 10
 end
 
 def run_local
   options = Selenium::WebDriver::Chrome::Options.new
-  # options.add_argument('--headless')
-  # options.add_argument('--disable-gpu') # This is needed to run headless on certain systems
 
   @browser = Selenium::WebDriver.for :chrome, options: options
   @browser.manage.window.maximize
   # @browser.manage.timeouts.implicit_wait = 10
-
-  #
-  # @browser = Watir::Browser.new
-  # @browser.window.maximize
 end
 
 AllureCucumber.configure do |config|
@@ -101,7 +105,7 @@ AllureCucumber.configure do |config|
   # additional metadata
   # environment.properties
   config.environment_properties = {
-    custom_attribute: 'foo test run 11.37'
+    custom_attribute: 'foo test'
   }
   # categories.json
   # config.categories = File.new("my_custom_categories.json")
