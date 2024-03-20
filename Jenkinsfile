@@ -12,12 +12,7 @@ pipeline {
                 }
             }
         }
-        stage('version') {
-            steps {
-                sh 'ruby --version'
-            }
-        }
-        stage('hello') {
+        stage('Test') {
             steps {
                 sh 'rake run TAGS=${TAG} PLATFORM=browserstack'
             }
