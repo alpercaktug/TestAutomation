@@ -12,13 +12,13 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Execute Tests') {
             steps {
                 sh 'rake run TAGS=${TAG} PLATFORM=browserstack'
             }
         }
 
-        stage('reports') {
+        stage('Generate Report') {
             steps {
             script {
                     allure([
