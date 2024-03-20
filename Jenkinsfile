@@ -8,6 +8,7 @@ pipeline {
             steps {
                 script {
                     sh 'gem install bundler -v 2.2.28 --user-install' // Install compatible Bundler version
+                    sh 'gem install cucumber-tag-expressions -v 5.0.6'
                     sh 'gem install cucumber page-object allure-cucumber --user-install'
                     sh 'bundle install --path ${workspace}/gems'
                 }
