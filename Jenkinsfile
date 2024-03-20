@@ -17,5 +17,12 @@ pipeline {
                 sh 'rake run TAGS=${TAG} PLATFORM=browserstack'
             }
         }
+        stage('Generate Allure report') {
+            steps {
+                script {
+                    sh 'bundle exec allure serve allure-report/allure-result'
+                }
+            }
+        }
     }
 }
