@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        PATH = "/usr/local/bin:$PATH" // Ensure necessary binaries are in PATH
-    }
     stages {
         stage('Install dependencies') {
             steps {
