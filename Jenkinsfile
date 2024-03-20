@@ -19,7 +19,7 @@ pipeline {
         }
         stage('hello') {
             steps {
-                sh 'rake run TAGS=${params.TAG} PLATFORM=browserstack'
+                sh 'rake run TAGS=${env.TAG} PLATFORM=browserstack'
             }
         }
     }
