@@ -24,7 +24,7 @@ Before do |scenario|
     connect_browserstack
   else
     # raise "Unsupported platform: #{ENV['PLATFORM']}"
-    run_local
+    connect_browserstack
   end
 end
 
@@ -34,7 +34,7 @@ end
 
 After('@cancel') do
   step 'Cancel reservation on result page'
-  step 'Verify reservation is "Canceled"'
+  step 'I should see the reservation is "Canceled"'
   puts 'Reservation canceled'
 end
 
@@ -71,7 +71,7 @@ def connect_browserstack
     'consoleLogs' => 'info'
   }]
 
-  bstack_options = caps[2]
+  bstack_options = caps[0]
 
   options = Selenium::WebDriver::Options.send 'chrome'
   options.browser_name = bstack_options['browserName'].downcase
@@ -85,16 +85,10 @@ end
 
 def run_local
   options = Selenium::WebDriver::Chrome::Options.new
-  #options.add_argument('--headless')
-  #options.add_argument('--disable-gpu') # This is needed to run headless on certain systems
 
   @browser = Selenium::WebDriver.for :chrome, options: options
   @browser.manage.window.maximize
   # @browser.manage.timeouts.implicit_wait = 10
-
-  #
-  # @browser = Watir::Browser.new
-  # @browser.window.maximize
 end
 
 AllureCucumber.configure do |config|

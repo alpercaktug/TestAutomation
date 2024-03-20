@@ -2,17 +2,11 @@
 
 require_relative '../../lib/pages/booking_page'
 require_relative '../../lib/pages/payment_page'
-require_relative '../../lib/pages/result_page'
+require_relative '../../lib/pages/summary_page'
 require_relative '../../lib/pages/extra_page'
 
-Then(/^Verify reservation is "([^"]*)"$/) do |result|
-  result_page = ResultPage.new(@browser)
-  expect(result_page.state_present?(result)).to eql(true)
-end
-
 Then(/^I should see the reservation is "([^"]*)"$/) do |state|
-  actual = ResultPage.new(@browser).result
-  expect(actual).to eql state
+  expect(SummaryPage.new(@browser).result_state).to eql state
 end
 
 Then(/^I should see a list of available rooms$/) do
@@ -41,13 +35,11 @@ Then(/^I should see the total price for the reservation$/) do
 end
 
 Then(/^I should see (\d+) "([^"]*)" has added on reservation details$/) do |room_count, room_name|
-  booking_page = BookingPage.new(@browser)
-  expect(booking_page.room_count_cart_list(room_name)).to eql room_count
+  expect(BookingPage.new(@browser).room_count_cart_list(room_name)).to eql room_count
 end
 
 Then(/^I should see (.*) under (.*)$/) do |error_message, field|
-  payment_page = PaymentPage.new(@browser)
-  expect(payment_page.error_message).to eql error_message
+  expect(PaymentPage.new(@browser).error_message).to eql error_message
 end
 
 Then(/^I should see invalid card number message$/) do

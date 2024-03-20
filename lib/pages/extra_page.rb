@@ -7,6 +7,7 @@ class ExtraPage < BasePage
   button(:add_to_room, xpath: '//div[@class="extra-room"]//button')
   div(:extra_container, xpath: '//div[@class="extra-container"]')
 
+  div(:extra_price, xpath: '//div[@class="extra"]//span[@class="price"]')
 
   def click_show_extra
     show_extra
@@ -23,5 +24,7 @@ class ExtraPage < BasePage
     extra_container?
   end
 
-
+  def extra_price_text
+    pending
+  end
 end

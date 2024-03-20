@@ -11,12 +11,14 @@
     </content>
     <orderEntry type="jdk" jdkName="RVM: ruby-3.2.0 [global]" jdkType="RUBY_SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="addressable (v2.8.6, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="allure-cucumber (v2.23.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="allure-ruby-commons (v2.23.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ast (v2.4.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="base64 (v0.2.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="builder (v3.2.4, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bundler (v2.5.6, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="capybara (v3.40.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="concurrent-ruby (v1.2.3, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="cucumber (v9.1.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="cucumber-ci-environment (v9.2.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
@@ -34,18 +36,22 @@
     <orderEntry type="library" scope="PROVIDED" name="json (v2.7.1, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="language_server-protocol (v3.17.0.3, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="macaddr (v1.7.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="matrix (v0.4.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types (v3.5.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mime-types-data (v3.2024.0206, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_mime (v1.1.5, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.22.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="multi_test (v1.1.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.16.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="page-object (v2.3.1, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="page_navigation (v0.10, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="parallel (v1.24.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
-    <orderEntry type="library" scope="PROVIDED" name="parallel_tests (v4.5.2, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="parser (v3.3.0.5, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="power_assert (v2.0.3, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="public_suffix (v5.0.4, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="racc (v1.7.3, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rack (v3.0.9.1, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rack-test (v2.1.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rainbow (v3.1.1, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v13.1.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="regexp_parser (v2.9.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
@@ -68,6 +74,7 @@
     <orderEntry type="library" scope="PROVIDED" name="uuid (v2.3.9, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="watir (v7.3.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket (v1.2.10, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="yml_reader (v0.7, RVM: ruby-3.2.0 [global]) [gem]" level="application" />
   </component>
   <component name="RakeTasksCache-v2">

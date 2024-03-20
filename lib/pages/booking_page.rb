@@ -35,6 +35,10 @@ class BookingPage < BasePage
     self
   end
 
+  def visit_result
+    @browser.get 'https://testautomation.hotelrunner.com/bv3/summary?success=1&o_number=R824072584&o_token=fa3a6a416a6b4913a01436d09acd8dbd'
+  end
+
   def select_date(night_count)
     date_picker
 
@@ -56,6 +60,7 @@ class BookingPage < BasePage
     end
     self
   end
+
   # to-do: Select child
 
   def click_search_button
@@ -73,10 +78,6 @@ class BookingPage < BasePage
     self
   end
 
-  def click_continue_button
-    continue_button
-  end
-
   def click_show_rates_button(room_name)
     click(:xpath, "//button[@aria-label='Show rates of#{room_name}']")
     self
@@ -85,6 +86,10 @@ class BookingPage < BasePage
   def click_hide_rates_button(room_name)
     click(:css, "button[aria-label='Hide rates of#{room_name}']")
     self
+  end
+
+  def click_continue_button
+    continue_button
   end
 
   def apply_coupon_code(coupon)
@@ -117,7 +122,6 @@ class BookingPage < BasePage
     subtotal = helper.convert_label_to_price(subtotal_price_label)
     discount = helper.convert_label_to_price(discount_price_label)
     total = helper.convert_label_to_price(total_price_label)
-
 
     puts "subtotal = #{subtotal}"
     puts "discount = #{discount}"

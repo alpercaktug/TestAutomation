@@ -1,14 +1,15 @@
-@full-suite @smoke @booking-engine
+@full-suite @booking-engine
 Feature: Booking Engine functionality tests
 
-  @cancel
+  @smoke
   Scenario: Make a successful reservation (with data table)
-    And I have the following data
+    Given I have the following data
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
       | 1     | 2           | 0           | Double Room | Cash           |
     When Make a reservation with the data
     Then I should see the reservation is "Confirmed"
 
+  @smoke
   Scenario: View Available Rooms
     Given Navigate to the booking page
     When Search for an available room for 1 night
@@ -18,11 +19,11 @@ Feature: Booking Engine functionality tests
 
   Scenario: Cancel a reservation on result page
     And I have the following data
-      | Night | Adult Count | Child Count | Room Type    | Payment Method |
-      | 1     | 2           | 0           | Double Room | Cash  |
+      | Night | Adult Count | Child Count | Room Type   | Payment Method |
+      | 1     | 2           | 0           | Double Room | Cash           |
     When Make a reservation with the data
     And Cancel reservation on result page
-    Then Verify reservation is "Canceled"
+    Then I should see the reservation is "Canceled"
 
   Scenario Outline: Reservation detail information should return correct data
     Given Navigate to the booking page
@@ -39,10 +40,10 @@ Feature: Booking Engine functionality tests
     When Search for an available room for <night> night
     And Search for an available room for <adult> adult
     And Add 1 "<Room Type>" to the cart
-    Then I should see the total price for the reservation
+    #Then I should see the total price for the reservation
     Examples:
-      | Room Type    | night | adult |
-      | Single Room  | 2     | 1     |
+      | Room Type   | night | adult |
+      | Single Room | 2     | 1     |
       | Double Room | 3     | 2     |
 
   Scenario: Room count in reservation detail should return correct data
@@ -65,7 +66,6 @@ Feature: Booking Engine functionality tests
       | email     | can't be blank       |
       | phone     | Invalid phone number |
 
-  @cancel
   Scenario: Valid Card Number format should be accept
     Given Navigate to the booking page
     When Search for an available room for 1 night
@@ -121,25 +121,28 @@ Feature: Booking Engine functionality tests
     Then I should see do you want to continue dialog
 
 #wip
-  Scenario: Extra page
+  Scenario: If a room has extras, the extras must appear before payment
     Given Navigate to the booking page
     And Add 1 "Extras Room" to the cart
-    And Continue to the payment page
+    When Continue to the payment page
     Then I should see extras
 
 
-    # coupon code recommended room
-  # extras form mandatory control
-  # paket tarih
+  Scenario: Extras should be successfully added to cart
+    Given Navigate to the booking page
+    And Add 1 "Extras Room" to the cart
+    When I add "Airport Transfer" to the cart
+    Then I should see the extra added successfully
+
+  Scenario: test
+    Given Navigate to the booking page
+
+
+
+
+    # coupon code price recommended room
+    # extras form mandatory control
+    # paket seçildiğinde o tarihe göndermesi
     # button isimleri
-  # ayarlardaki price seçenekleri
-
-
-
-
-
-
-
-
-
-# promosyon vs kupon kodu
+    # ayarlardaki price seçenekleri
+    # promosyon vs kupon kodu

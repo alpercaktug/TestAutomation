@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 require_relative '../../lib/pages/booking_page'
 require_relative '../../lib/pages/payment_page'
-require_relative '../../lib/pages/result_page'
-require_relative '../../lib/pages/booking_engine_settings_page'
+require_relative '../../lib/pages/summary_page'
+require_relative '../../lib/pages/sections/reservation_details'
 
 # NAVIGATE TO BOOKING PAGE
 # done
@@ -59,7 +60,6 @@ When(/^Make a reservation for a "([^"]*)" for (\d+) night and (\d+) adult with "
              .click_complete
 end
 
-
 # SELECT ADULT
 # done
 When(/^Search for an available room for (\d+) adult$/) do |adult|
@@ -79,7 +79,6 @@ end
 # ADD ROOM
 # done
 When(/^Add (\d+) "([^"]*)" to the cart$/) do |amount, room_type|
-
   booking_page = BookingPage.new(@browser)
                             .click_show_rates_button(room_type)
                             .click_add_room_button
@@ -106,9 +105,9 @@ end
 # CANCEL
 # done
 When(/^Cancel reservation on result page$/) do
-  ResultPage.new(@browser)
-            .click_cancel
-            .click_yes
+  SummaryPage.new(@browser)
+             .click_cancel
+             .click_yes
 end
 
 # SPECIAL
@@ -127,10 +126,7 @@ end
 # SETTINGS (NEW)
 # wip
 Given(/^that the "([^"]*)" setting is "([^"]*)"$/) do |setting, ability|
-  puts "#{setting} is #{ability}"
-  settings = BookingEngineSettingsPage.new(@browser)
-  settings.visit
-  settings.enable_auto_confirm_paid_reservations
+  pending
 end
 
 # PAYMENT (MAIL ORDER)
@@ -162,8 +158,20 @@ When(/^Complete the reservation with bank transfer$/) do
              .click_complete
 end
 
+# PAYMENT (PAY AT THE PROPERTY)
+And(/^Complete the reservation with pay at the property$/) do
+  PaymentPage.new(@browser)
+             .select_payment_method('Cash')
+             .click_complete
+end
+
 # APPLY COUPON CODE
 # done
 And(/^Apply a coupon code that "([^"]*)"$/) do |code|
   BookingPage.new(@browser).apply_coupon_code code
+  sleep 4
+end
+
+When(/^I add "([^"]*)" to the cart$/) do |arg|
+  pending
 end

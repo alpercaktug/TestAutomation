@@ -65,7 +65,7 @@ class PaymentPage < BasePage
 
   def click_complete
     complete_reservation
-    ResultPage.new(@browser)
+    SummaryPage.new(@browser)
   end
 
   def error_message
