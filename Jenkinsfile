@@ -2,6 +2,8 @@ pipeline {
     agent any
     environment {
             PATH = "/usr/local/bin:$PATH:" // Include gem binaries directory in PATH
+            GEM_HOME = "/Users/alpercaktug/.rvm/rubies/ruby-3.2.0/gems" // Install gems locally within the project directory
+
         }
     stages {
         stage('Install dependencies') {
