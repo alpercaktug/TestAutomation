@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-            PATH = "/usr/local/bin:$PATH:/Users/alpercaktug/.rvm/rubies/ruby-3.2.0" // Include gem binaries directory in PATH
+            PATH = "/Users/alpercaktug/.rvm/rubies/ruby-3.2.0" // Include gem binaries directory in PATH
         }
     stages {
         stage('Install dependencies') {
