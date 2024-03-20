@@ -8,6 +8,7 @@ pipeline {
             steps {
                 script {
                     sh 'ruby --version'
+                    sh 'bundle install'
 
                 }
             }
