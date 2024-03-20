@@ -9,7 +9,7 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 script {
-                    sh 'gem install bundler cucumber page-object allure-cucumber --user-install'
+                    sh 'ruby --version'
                     sh 'bundle install'
                 }
             }
