@@ -1,11 +1,15 @@
 pipeline {
     agent any
+    environment {
+        PATH = "/usr/local/bin:$PATH" // Ensure necessary binaries are in PATH
+        GEM_HOME = "${workspace}/gems" // Install gems locally within the project directory
+    }
     stages {
         stage('Install dependencies') {
             steps {
                 script {
-                    sh 'gem install bundler cucumber page-object allure-cucumber'
-                    sh 'bundle install'
+                    sh 'gem install bundler cucumber page-object allure-cucumber --user-install'
+                    sh 'bundle install --path ${workspace}/gems'
                 }
             }
         }
