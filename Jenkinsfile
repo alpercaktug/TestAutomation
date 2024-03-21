@@ -1,8 +1,16 @@
 pipeline {
     agent any
-    environment {
-              PATH = "/usr/local/rvm/gems/ruby-3.2.0/bin:/usr/local/rvm/gems/ruby-3.2.0@global/bin:/usr/local/rvm/rubies/ruby-3.2.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/rvm/bin"
-                       }
+     environment {
+            PATH = "/usr/local/rvm/bin:$PATH" // Add RVM bin directory to PATH
+        }
+        stages {
+            stage('Initialize RVM') {
+                steps {
+                    script {
+                        sh 'source /usr/local/rvm/scripts/rvm' // Source RVM script to initialize it
+                    }
+                }
+            }
     stages {
         stage('Install dependencies') {
             steps {
