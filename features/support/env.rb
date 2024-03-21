@@ -24,7 +24,7 @@ Before do |scenario|
     connect_browserstack
   else
     # raise "Unsupported platform: #{ENV['PLATFORM']}"
-    connect_browserstack
+    run_local
   end
 end
 
