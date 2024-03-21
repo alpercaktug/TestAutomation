@@ -1,10 +1,16 @@
 pipeline {
     agent any
     environment {
-            PATH = "/usr/local/rvm/bin" // Include gem binaries directory in PATH
+            PATH = "/usr/local/rvm/gems/ruby-3.2.0/bin:/usr/local/rvm/gems/ruby-3.2.0@global/bin:/usr/local/rvm/rubies/ruby-3.2.0/bin:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin" // Include gem binaries directory in PATH
                    }
     stages {
-
+    stage('Setup RVM') {
+            steps {
+                script {
+                    sh 'rvm use 3.2.0@TestAutomation'
+                }
+            }
+        }
         stage('Install dependencies') {
             steps {
                 script {
