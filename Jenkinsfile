@@ -6,13 +6,13 @@ pipeline {
 
 
     stages {
-        stage('Initialize RVM') {
-                    steps {
-                        script {
-                            sh 'source /usr/local/rvm/scripts/rvm' // Source RVM script to initialize it
-                        }
-                    }
-                }
+       stage('Initialize RVM') {
+                   steps {
+                       script {
+                           sh '. /usr/local/rvm/scripts/rvm' // Use dot command to source RVM script
+                       }
+                   }
+               }
         stage('Install dependencies') {
             steps {
                 script {
