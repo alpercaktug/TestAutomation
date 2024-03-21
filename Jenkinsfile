@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Execute Tests') {
             steps {
-                sh 'rake run TAGS=${TAG} PLATFORM=browserstack'
+                sh 'cucumber --tags ${TAG}'
             }
         }
 
