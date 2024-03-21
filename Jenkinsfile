@@ -1,23 +1,13 @@
 pipeline {
     agent any
      environment {
-            PATH = "/usr/local/rvm/gems/ruby-3.2.0/bin:/usr/local/rvm/gems/ruby-3.2.0@global/bin:/usr/local/rvm/rubies/ruby-3.2.0/bin:/usr/local/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin" // Add RVM bin directory to PATH
+            PATH = "/Users/alpercaktug/.rvm/gems/ruby-3.2.0/bin:/Users/alpercaktug/.rvm/gems/ruby-3.2.0@global/bin:/Users/alpercaktug/.rvm/rubies/ruby-3.2.0/bin:/opt/homebrew/opt/ruby/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Users/alpercaktug/.rvm/bin"
         }
-
-
     stages {
-       stage('Initialize RVM') {
-                   steps {
-                       script {
-                           sh '. /usr/local/rvm/scripts/rvm' // Use dot command to source RVM script
-                       }
-                   }
-               }
         stage('Install dependencies') {
             steps {
                 script {
                     sh 'ruby --version'
-                    sh 'rvm @global do gem install bundler --no-document' // Install bundler gem
                     sh 'bundle install'
                 }
             }
