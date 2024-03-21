@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     sh 'ruby --version'
-                    sh 'sudo bundle install'
+                    sh 'bundle install --verbose'
                 }
             }
         }
