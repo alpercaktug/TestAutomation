@@ -12,11 +12,18 @@ pipeline {
                 }
             }
         }
-        stage('Execute Tests') {
-            steps {
-                sh 'cucumber --tags ${TAG}'
-            }
-        }
+       stage('Execute Tests') {
+                   steps {
+                       script {
+                           try {
+                               sh 'cucumber --tags ${TAG}'
+                           } catch (Exception e) {
+                               currentBuild.result = 'UNSTABLE' // Mark the build as unstable if tests fail
+                               echo "Tests failed but continuing the pipeline."
+                           }
+                       }
+                   }
+               }
 
         stage('Generate Report') {
             steps {
