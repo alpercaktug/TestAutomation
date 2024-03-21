@@ -1,10 +1,6 @@
 pipeline {
     agent any
-    environment {
-             GEM_HOME = "/usr/local/rvm/gems/ruby-3.2.0"
-                GEM_PATH = "/usr/local/rvm/gems/ruby-3.2.0:/usr/local/rvm/gems/ruby-3.2.0@global"
-                PATH = "$PATH:$GEM_HOME/bin:$GEM_PATH/bin:/usr/local/rvm/rubies/ruby-3.2.0/bin:/usr/local/rvm/bin"
-                }
+
     stages {
     stage('Setup RVM') {
             steps {
