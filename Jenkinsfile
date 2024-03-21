@@ -2,13 +2,7 @@ pipeline {
     agent any
 
     stages {
-    stage('Setup RVM') {
-            steps {
-                script {
-                    sh 'rvm use 3.2.0@TestAutomation'
-                }
-            }
-        }
+
         stage('Install dependencies') {
             steps {
                 script {
