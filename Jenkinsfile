@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     sh 'ruby --version'
-                    sh 'gem install bundler --no-document' // Install bundler gem
+                    sh 'rvm @global do gem install bundler --no-document' // Install bundler gem
                     sh 'bundle install'
                 }
             }
