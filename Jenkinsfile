@@ -3,16 +3,16 @@ pipeline {
      environment {
             PATH = "/usr/local/rvm/bin:$PATH" // Add RVM bin directory to PATH
         }
-        stages {
-            stage('Initialize RVM') {
-                steps {
-                    script {
-                        sh 'source /usr/local/rvm/scripts/rvm' // Source RVM script to initialize it
+
+
+    stages {
+        stage('Initialize RVM') {
+                    steps {
+                        script {
+                            sh 'source /usr/local/rvm/scripts/rvm' // Source RVM script to initialize it
+                        }
                     }
                 }
-            }
-            }
-    stages {
         stage('Install dependencies') {
             steps {
                 script {
