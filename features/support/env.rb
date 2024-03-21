@@ -7,8 +7,8 @@ require 'logger'
 
 World(PageObject::PageFactory)
 
-USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_HS7UTE'
-ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'en7xgub7mnqqDwdVQV6i'
+USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_h06gWL'
+ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'obgphgkvpR5xAUMjQtZq'
 
 BaseUrl = 'https://testautomation.hotelrunner.com'
 
