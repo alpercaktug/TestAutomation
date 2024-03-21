@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
             PATH = "/usr/local/rvm/rubies/ruby-3.2.0/bin/ruby"
+            }
     stages {
         stage('Install dependencies') {
             steps {
