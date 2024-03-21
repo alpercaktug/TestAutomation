@@ -8,6 +8,11 @@ pipeline {
             steps {
                 script {
                     sh 'ruby --version'
+                    sh 'gem install bundler'
+                    sh 'gem install cucumber'
+                    sh 'gem install page-object'
+                    sh 'gem install allure-cucumber'
+                    sh 'bundle install'
                 }
             }
         }
