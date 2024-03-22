@@ -28,7 +28,8 @@ class SummaryPage < BasePage
   end
 
   def result_state
-    result_state_element.text.strip
+    puts result_state_element.text
+    result_state_element.text
   end
 
   def subtotal_price
