@@ -28,8 +28,7 @@ class SummaryPage < BasePage
   end
 
   def result_state
-    puts result_state_element.text
-    result_state_element.text
+    result_state_element.text.strip
   end
 
   def subtotal_price
@@ -51,6 +50,6 @@ class SummaryPage < BasePage
 
   def click_yes
     yes
-    sleep 3
+    self
   end
 end
