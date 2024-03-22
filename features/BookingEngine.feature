@@ -7,7 +7,7 @@ Feature: Booking Engine functionality tests
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
       | 1     | 2           | 0           | Double Room | Cash           |
     When Make a reservation with the data
-    Then I should see the reservation is "Canceled"
+    Then I should see the reservation is "Confirmed"
 
   @test
   Scenario: View Available Rooms
