@@ -7,20 +7,8 @@ pipeline {
         stage('Install dependencies') {
             steps {
                 script {
-
-                                    // Use the correct ruby and gemset
-                sh 'rvm use "ruby@gemset"'
-                                    // Set "fail on error" in bash
-                sh 'set -e'
-                                    // Do any setup
-                                    // e.g. possibly do 'rake db:migrate db:test:prepare' here
-                sh 'bundle install'
-                                    // Finally, run your tests
-                // sh 'rake'
-
-
                     sh 'ruby --version'
-                    //sh 'bundle install'
+                    sh 'bundle install'
                 }
             }
         }
