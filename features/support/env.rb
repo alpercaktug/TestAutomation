@@ -4,6 +4,8 @@ require 'page-object'
 require 'allure-cucumber'
 require 'page-object/page_factory'
 require 'logger'
+require 'json'
+
 
 World(PageObject::PageFactory)
 
@@ -71,6 +73,7 @@ def connect_browserstack
     'consoleLogs' => 'info'
   }]
 
+
   bstack_options = caps[0]
 
   options = Selenium::WebDriver::Options.send 'chrome'
@@ -78,6 +81,19 @@ def connect_browserstack
   options.add_option('bstack:options', bstack_options)
   @browser = Selenium::WebDriver.for(:remote, url: "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
                                               capabilities: options)
+  #@browserstack_session_url = @browser.session_id
+  response = @browser.execute_script('browserstack_executor: {"action": "getSessionDetails"}')
+  puts response
+
+  parsed_response = JSON.parse(response)
+
+  # Get the value of 'public_url'
+  public_url = parsed_response['public_url']
+
+  puts "Public URL: #{public_url}"
+
+  Allure.add_link(name: 'BrowserStack Session', url: public_url)
+
 
   @browser.manage.window.maximize
   @browser.manage.timeouts.implicit_wait = 10
