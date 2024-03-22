@@ -136,8 +136,6 @@ Feature: Booking Engine functionality tests
     When I add "Airport Transfer" to the cart
     Then I should see the extra added successfully
 
-  Scenario: test
-    Given Navigate to the booking page
 
 
 
