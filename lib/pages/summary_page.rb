@@ -51,6 +51,5 @@ class SummaryPage < BasePage
   def click_yes
     yes
     sleep 3
-    self
   end
 end
