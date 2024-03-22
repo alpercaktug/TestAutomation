@@ -23,7 +23,7 @@ Feature: Booking Engine functionality tests
       | 1     | 2           | 0           | Double Room | Cash           |
     When Make a reservation with the data
     And Cancel reservation on result page
-    Then I should see the reservation is "Confirmed"
+    Then I should see the reservation is "Canceled"
 
   Scenario Outline: Reservation detail information should return correct data
     Given Navigate to the booking page
