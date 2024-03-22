@@ -28,7 +28,6 @@ class SummaryPage < BasePage
   end
 
   def result_state
-    sleep 3
     result_state_element.text.strip
   end
 

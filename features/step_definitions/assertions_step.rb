@@ -6,8 +6,9 @@ require_relative '../../lib/pages/summary_page'
 require_relative '../../lib/pages/extra_page'
 
 Then(/^I should see the reservation is "([^"]*)"$/) do |state|
-
-  expect(SummaryPage.new(@browser).result_state).to eql state
+  sleep 3
+  result = SummaryPage.new(@browser).result_state
+  expect(result).to eql state
 end
 
 Then(/^I should see a list of available rooms$/) do
