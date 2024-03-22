@@ -83,7 +83,7 @@ def connect_browserstack
                                               capabilities: options)
   #@browserstack_session_url = @browser.session_id
   response = @browser.execute_script('browserstack_executor: {"action": "getSessionDetails"}')
-  puts response
+  #puts response
 
   parsed_response = JSON.parse(response)
 
