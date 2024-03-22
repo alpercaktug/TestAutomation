@@ -9,7 +9,7 @@ Feature: Booking Engine functionality tests
     When Make a reservation with the data
     Then I should see the reservation is "Confirmed"
 
-  @test
+
   Scenario: View Available Rooms
     Given Navigate to the booking page
     When Search for an available room for 1 night
@@ -17,6 +17,7 @@ Feature: Booking Engine functionality tests
     Then I should see a list of available rooms
     And the prices for each room should be displayed
 
+  @test
   Scenario: Cancel a reservation on result page
     And I have the following data
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
