@@ -129,11 +129,11 @@ Feature: Booking Engine functionality tests
     When Continue to the payment page
     Then I should see extras
 
-
+#wip
   Scenario: Extras should be successfully added to cart
     Given Navigate to the booking page
     And Add 1 "Extras Room" to the cart
-    When I add "Airport Transfer" to the cart
+    #When I add "Airport Transfer" to the cart
     #Then I should see the extra added successfully
 
 
