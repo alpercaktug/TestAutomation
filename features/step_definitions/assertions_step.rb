@@ -6,7 +6,7 @@ require_relative '../../lib/pages/summary_page'
 require_relative '../../lib/pages/extra_page'
 
 Then(/^I should see the reservation is "([^"]*)"$/) do |state|
-  sleep 3
+
   expect(SummaryPage.new(@browser).result_state).to eql state
 end
 
