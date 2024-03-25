@@ -138,11 +138,12 @@ Feature: Booking Engine functionality tests
 
 
 
-
-
+    # bar
     # coupon code price recommended room
     # extras form mandatory control
     # paket seçildiğinde o tarihe göndermesi
     # button isimleri
     # ayarlardaki price seçenekleri
     # promosyon vs kupon kodu
+
+
