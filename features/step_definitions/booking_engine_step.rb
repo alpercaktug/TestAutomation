@@ -9,7 +9,7 @@ require_relative '../../lib/pages/sections/reservation_details'
 # done
 Given(/^Navigate to the booking page$/) do
   BookingPage.new(@browser).visit_booking_page
-  sleep 1
+  sleep 2
 end
 
 # GET DATA FROM TABLE
