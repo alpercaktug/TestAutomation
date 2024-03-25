@@ -1,7 +1,7 @@
 @full-suite @booking-engine
 Feature: Booking Engine functionality tests
 
-  @smoke
+
   Scenario: Make a successful reservation (with data table)
     Given I have the following data
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
@@ -17,7 +17,7 @@ Feature: Booking Engine functionality tests
     Then I should see a list of available rooms
     And the prices for each room should be displayed
 
-  @test
+
   Scenario: Cancel a reservation on result page
     And I have the following data
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
@@ -138,7 +138,8 @@ Feature: Booking Engine functionality tests
 
 
 
-    #  barssdfdfgdfgsdfdfsdf
+
+    # bar
     # coupon code price recommended room
     # extras form mandatory control
     # paket seçildiğinde o tarihe göndermesi
