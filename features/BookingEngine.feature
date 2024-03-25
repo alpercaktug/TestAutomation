@@ -138,7 +138,7 @@ Feature: Booking Engine functionality tests
 
 
 
-    #  bar sdfsdfsdf
+    #  bar sdfsdfsdsdfsdfdsff
     # coupon code price recommended room
     # extras form mandatory control
     # paket seçildiğinde o tarihe göndermesi
