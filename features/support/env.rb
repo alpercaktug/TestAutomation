@@ -50,7 +50,8 @@ def connect_browserstack
     'sessionName' => "#{@current_scenario_name} -- Chrome",
     'debug' => 'true',
     'networkLogs' => 'true',
-    'consoleLogs' => 'info'
+    'consoleLogs' => 'info',
+    'local' => 'true'
   }, {
     'browserName' => 'Safari',
     'browserVersion' => '15.6',
