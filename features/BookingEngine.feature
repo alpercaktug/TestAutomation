@@ -1,4 +1,4 @@
-@full-suite @booking-engine
+@full-suite @booking-engine @prod
 Feature: Booking Engine Prod Test
 
   @test
