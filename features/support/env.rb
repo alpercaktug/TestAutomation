@@ -22,7 +22,7 @@ end
 
 Before('@prod') do
   puts 'tests will run prod env'
-  @local_parameter = 'true'
+  @local_parameter = 'false'
   @env = 'prod'
 end
 
