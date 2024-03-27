@@ -1,6 +1,7 @@
 @full-suite @booking-engine @stage
 Feature: Booking Engine Stage Test
 
+  @test
   Scenario: Make a successful reservation (with data table)
     Given I have the following data
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
