@@ -14,6 +14,12 @@ ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'eyEAqzbsNpYEX2sHhUGH'
 
 BaseUrl = 'https://testautomation.hotelrunner.com'
 
+Before('@stage') do
+  puts 'tests will run staging env'
+  @local_parameter = 'true'
+end
+
+
 Before do |scenario|
   @current_scenario_name = scenario.name
   puts "URL has set to : #{BaseUrl}"
@@ -51,7 +57,7 @@ def connect_browserstack
     'debug' => 'true',
     'networkLogs' => 'true',
     'consoleLogs' => 'info',
-    'local' => 'true'
+    'local' => "#{@local_parameter}"
   }, {
     'browserName' => 'Safari',
     'browserVersion' => '15.6',

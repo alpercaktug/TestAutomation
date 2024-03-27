@@ -1,5 +1,5 @@
-@full-suite @booking-engine
-Feature: Booking Engine Prod Test
+@full-suite @booking-engine @stage
+Feature: Booking Engine Stage Test
 
   Scenario: Make a successful reservation (with data table)
     Given I have the following data
@@ -137,6 +137,8 @@ Feature: Booking Engine Prod Test
 
 
     # bar
+
+
     # coupon code price recommended room
     # extras form mandatory control
     # paket seçildiğinde o tarihe göndermesi
