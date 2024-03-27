@@ -9,8 +9,8 @@ require 'json'
 
 World(PageObject::PageFactory)
 
-USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_h06gWL'
-ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'obgphgkvpR5xAUMjQtZq'
+USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_Ug4qG2'
+ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'eyEAqzbsNpYEX2sHhUGH'
 
 BaseUrl = 'https://testautomation.hotelrunner.com'
 
