@@ -14,6 +14,7 @@ ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'eyEAqzbsNpYEX2sHhUGH'
 
 BaseUrl = 'https://testautomation.hotelrunner.com'
 
+
 Before('@stage') do
   puts 'tests will run staging env'
   @local_parameter = 'true'
@@ -23,7 +24,6 @@ end
 Before('@prod') do
   puts 'tests will run prod env'
   @local_parameter = 'false'
-  @env = 'prod'
 end
 
 
@@ -126,7 +126,11 @@ AllureCucumber.configure do |config|
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
   config.logger = Logger.new($stdout, Logger::DEBUG)
-  config.environment = @env.to_s
+  config.environment = if @local_parameter == true
+                         'stage'
+                       else
+                         'prod'
+                       end
 
   # these are used for creating links to bugs or test cases where {} is replaced with keys of relevant items
   # config.link_tms_pattern = "http://www.jira.com/browse/{}"
