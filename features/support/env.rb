@@ -138,7 +138,7 @@ AllureCucumber.configure do |config|
   # additional metadata
   # environment.properties
   config.environment_properties = {
-    custom_attribute: 'foo test'
+    custom_attribute: 'foo'
   }
   # categories.json
   # config.categories = File.new("my_custom_categories.json")
