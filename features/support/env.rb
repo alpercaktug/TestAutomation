@@ -64,7 +64,7 @@ def connect_browserstack
     'debug' => 'true',
     'networkLogs' => 'true',
     'consoleLogs' => 'info',
-    'local' => "#{@local_parameter}"
+    'local' => @local_parameter.to_s
   }, {
     'browserName' => 'Safari',
     'browserVersion' => '15.6',
@@ -126,7 +126,7 @@ AllureCucumber.configure do |config|
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
   config.logger = Logger.new($stdout, Logger::DEBUG)
-  config.environment = "#{@env}"
+  config.environment = @env.to_s
 
   # these are used for creating links to bugs or test cases where {} is replaced with keys of relevant items
   # config.link_tms_pattern = "http://www.jira.com/browse/{}"
