@@ -100,7 +100,7 @@ class BookingPage < BasePage
   end
 
   def room_count_cart_list(room_name)
-    room_elements = @browser.find_elements(:xpath, "//span[@class='item-title' and text()='#{room_name}']")
+    room_elements = @browser.find_elements(:xpath, "//span[@class='item-title' and contains(text(),'#{room_name}')]")
     puts "There is #{room_elements.count}  #{room_name}  in reservation details"
     room_elements.count
   end

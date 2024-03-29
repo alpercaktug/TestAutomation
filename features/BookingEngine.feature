@@ -1,7 +1,6 @@
 @full-suite @booking-engine @prod
 Feature: Booking Engine Prod Test
 
-
   @test
   Scenario: Make a successful reservation (with data table)
     Given I have the following data
@@ -91,6 +90,7 @@ Feature: Booking Engine Prod Test
       | 123    | 000 | 01/27  | first     | last     |
     Then I should see invalid card number message
 
+  @coupon_code
   Scenario: Valid promo code should be accept
     Given Navigate to the booking page
     When Search for an available room for 1 night
@@ -99,6 +99,7 @@ Feature: Booking Engine Prod Test
     And Apply a coupon code that "820F4F"
     Then I should see that the coupon discount is successful in reservation detail
 
+  @coupon_code
   Scenario: Invalid promo code shouldn't be accept
     Given Navigate to the booking page
     When Search for an available room for 1 night
@@ -137,8 +138,21 @@ Feature: Booking Engine Prod Test
     When Click continue
     And Complete the reservation with pay at the property
 
+  @bar
+  Scenario: Make a successful reservation when best Available Rate enabled
+    Given that the "Best Available Rate" setting is "enabled"
+    When Make a reservation for a "Single Room" for 2 night and 1 adult with "Cash"
+    Then I should see the reservation is "Confirmed"
+    #Then I should see a recommended best available rate
 
-    # bar
+  @bar
+  Scenario:  Make a successful reservation when best Available Rate disabled
+    Given that the "Best Available Rate" setting is "disabled"
+    When Make a reservation for a "Single Room" for 2 night and 1 adult with "Cash"
+    Then I should see the reservation is "Confirmed"
+    #Then I should see a recommended best available rate
+
+
     # coupon code price recommended room
     # extras form mandatory control
     # paket seçildiğinde o tarihe göndermesi

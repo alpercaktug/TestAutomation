@@ -7,7 +7,7 @@ require_relative '../../lib/pages/extra_page'
 
 Then(/^I should see the reservation is "([^"]*)"$/) do |state|
   result = SummaryPage.new(@browser).result_state
-  expect(result).to eql state
+  expect(result).to eq(state), "Expected state #{state}, but is was #{result}"
 end
 
 Then(/^I should see a list of available rooms$/) do
@@ -25,10 +25,9 @@ Then(/^the prices for each room should be displayed$/) do
 end
 
 Then(/^I should see correct (\d+) information on reservation detail$/) do |night|
-  booking_page = BookingPage.new(@browser)
   expected = night.to_i == 1 ? "#{night} night" : "#{night} nights"
   puts expected
-  expect(booking_page.guest_info).to eql(expected)
+  expect(BookingPage.new(@browser).guest_info).to eql(expected)
 end
 
 Then(/^I should see the total price for the reservation$/) do
@@ -59,6 +58,18 @@ Then(/^I should see do you want to continue dialog$/) do
   expect(BookingPage.new(@browser).want_to_continue_message?).to eq true
 end
 
-Then(/^I should see extras$/) do
+Then(/^I should see extras has return successfully$/) do
   expect(ExtraPage.new(@browser).extra?).to eq true
+end
+
+Then(/^I should see the extra "([^"]*)" added successfully to cart$/) do |extra_name|
+  extra_info = ReservationCart.new(@browser).get_room_extra 'Extras Room', extra_name
+  extra_price = ExtraPage.new(@browser).price(extra_name)
+
+  first_item = extra_info[0]
+  expect(first_item[:title]).to eq(extra_name), "There is no extra or your extra isn't here."
+  actual_total = extra_price + 1000
+  puts actual_total
+
+  expect(ReservationCart.new(@browser).total_price).to eq (actual_total)
 end

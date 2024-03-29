@@ -3,7 +3,8 @@
 require_relative '../../lib/pages/booking_page'
 require_relative '../../lib/pages/payment_page'
 require_relative '../../lib/pages/summary_page'
-require_relative '../../lib/pages/sections/reservation_details'
+require_relative '../../lib/pages/booking_engine_settings_page'
+require_relative '../../lib/pages/sections/reservation_cart'
 
 # NAVIGATE TO BOOKING PAGE
 # done
@@ -92,7 +93,7 @@ end
 
 # CONTINUE
 # wip (not just payment page)
-And(/^Continue to the payment page$/) do
+And(/^Click continue$/) do
   BookingPage.new(@browser)
              .click_continue_button
 end
@@ -126,7 +127,10 @@ end
 # SETTINGS (NEW)
 # wip
 Given(/^that the "([^"]*)" setting is "([^"]*)"$/) do |setting, ability|
-  pending
+  LoginPage.new(@browser).visit_dashboard_page
+  BookingEngineSettingsPage.new(@browser)
+                           .visit_settings_page
+                           .enable_setting setting, ability
 end
 
 # PAYMENT (MAIL ORDER)
@@ -172,6 +176,8 @@ And(/^Apply a coupon code that "([^"]*)"$/) do |code|
   sleep 4
 end
 
-When(/^I add "([^"]*)" to the cart$/) do |arg|
-  pending
+When(/^I add "([^"]*)" to the cart$/) do |extra_name|
+  ExtraPage.new(@browser)
+           .click_show_extra(extra_name)
+           .add_to_room
 end

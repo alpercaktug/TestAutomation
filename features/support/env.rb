@@ -16,12 +16,12 @@ BaseUrl = 'https://testautomation.hotelrunner.com'
 
 
 Before('@stage') do
-  puts 'tests will run staging env'
+  puts 'tests will run at staging env'
   @local_parameter = 'true'
 end
 
 Before('@prod') do
-  puts 'tests will run prod env'
+  puts 'tests will run at prod env'
   @local_parameter = 'false'
 end
 
@@ -121,15 +121,16 @@ def run_local
 end
 
 AllureCucumber.configure do |config|
+  if @local_parameter == true
+    config.environment = 'stage'
+  elsif @local_parameter == false
+    config.environment = 'prod'
+  end
   config.results_directory = 'allure-result'
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
   config.logger = Logger.new($stdout, Logger::DEBUG)
-  if @local_parameter == true
-    config.environment = 'stage'
-   elsif @local_parameter == false
-    config.environment = 'prod'
-  end
+
 
   # these are used for creating links to bugs or test cases where {} is replaced with keys of relevant items
   # config.link_tms_pattern = "http://www.jira.com/browse/{}"

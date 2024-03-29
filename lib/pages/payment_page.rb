@@ -52,11 +52,12 @@ class PaymentPage < BasePage
   def select_payment_method(payment_method)
     case payment_method
     when 'Cash'
-      click(:xpath, '//a[@id="935795127-link"]/span')
+      click(:xpath, '//span[text()="Cash"]/..')
     when 'Mail Order'
-      click(:xpath, '//a[@id="935795143-link"]/span')
+      click(:xpath, '//span[text()="Mail Order"]/..')
+      sleep 4
     when 'Bank Transfer'
-      click(:xpath, '//a[@id="935790797-link"]/span')
+      click(:xpath, '//span[text()="Bank Transfer"]/..')
     else
       puts 'Wrong payment method'
     end
