@@ -37,8 +37,8 @@ When(/^Make a reservation with the data$/) do
              .select_date(@night.to_i)
              .select_adult(@adult.to_i)
              .click_search_button
-             .click_show_rates_button(@room)
-             .click_add_room_button
+             #.click_show_rates_button(@room)
+             .click_add_room_button(@room)
              .click_continue_button
   PaymentPage.new(@browser).fill_contact_information
              .select_payment_method(@payment)
@@ -53,8 +53,8 @@ When(/^Make a reservation for a "([^"]*)" for (\d+) night and (\d+) adult with "
              .select_date(night)
              .select_adult(adult)
              .click_search_button
-             .click_show_rates_button(room_type)
-             .click_add_room_button
+             #.click_show_rates_button(room_type)
+             .click_add_room_button room_type
              .click_continue_button
   PaymentPage.new(@browser).fill_contact_information
              .select_payment_method(payment_method)
@@ -81,14 +81,13 @@ end
 # done
 When(/^Add (\d+) "([^"]*)" to the cart$/) do |amount, room_type|
   booking_page = BookingPage.new(@browser)
-                            .click_show_rates_button(room_type)
-                            .click_add_room_button
+  #.click_show_rates_button(room_type)
+                            .click_add_room_button room_type
 
   (2..amount).each do |_i|
     booking_page.click_increase_room_button
   end
-
-  booking_page.click_hide_rates_button(room_type)
+  #booking_page.click_hide_rates_button(room_type)
 end
 
 # CONTINUE
@@ -96,6 +95,7 @@ end
 And(/^Click continue$/) do
   BookingPage.new(@browser)
              .click_continue_button
+  sleep 5
 end
 
 # done
@@ -117,8 +117,8 @@ When(/^Make a reservation to "([^"]*)" for (\d+) night without filling "([^"]*)"
   BookingPage.new(@browser)
              .select_date(night)
              .click_search_button
-             .click_show_rates_button(room_name)
-             .click_add_room_button
+             #.click_show_rates_button(room_name)
+             .click_add_room_button(room_name)
              .click_continue_button
   PaymentPage.new(@browser).fill_contact_information_without(field)
              .click_complete
@@ -180,4 +180,18 @@ When(/^I add "([^"]*)" to the cart$/) do |extra_name|
   ExtraPage.new(@browser)
            .click_show_extra(extra_name)
            .add_to_room
+end
+
+And(/^Continue and complete the reservation with pay at the property$/) do
+  BookingPage.new(@browser)
+             .click_continue_button
+  PaymentPage.new(@browser)
+             .fill_contact_information
+             .select_payment_method('Cash')
+             .click_complete
+end
+
+When(/^Add recommended room to cart$/) do
+  BookingPage.new(@browser)
+             .click_select_recommend_room
 end

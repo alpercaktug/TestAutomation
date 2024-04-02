@@ -18,7 +18,7 @@ Feature: Example tests
     And Search for an available room for 1 adult
     And Add 1 "Double Room" to the cart
     And Apply a coupon code that "820F4F"
-    And Continue to the payment page
+    And Click continue
     And Fill contact form
     And Complete the reservation with pay at the property
     Then I should see the reservation is "Confirmed"
@@ -29,7 +29,5 @@ Feature: Example tests
     When Make a reservation for a "Classic Room" for 1 night and 1 adult with "Bank Transfer"
     Then I should see the reservation is "Confirmed"
 
-  Scenario: test
-    Given Navigate result page
-    Then I should see the reservation is "Confirmed"
+
 

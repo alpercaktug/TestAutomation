@@ -5,6 +5,7 @@ require 'allure-cucumber'
 require 'page-object/page_factory'
 require 'logger'
 require 'json'
+require 'yaml'
 
 
 World(PageObject::PageFactory)
@@ -13,6 +14,13 @@ USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_Ug4qG2'
 ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'eyEAqzbsNpYEX2sHhUGH'
 
 BaseUrl = 'https://testautomation.hotelrunner.com'
+
+
+BeforeAll do
+  puts 'Setting environment and test data'
+  # Başlangıçta test data jsondan verilen env için olan bloğu al ve sakla
+  # tüm testlerde onu kullan
+end
 
 
 Before('@stage') do
@@ -27,6 +35,7 @@ end
 
 
 Before do |scenario|
+
   @current_scenario_name = scenario.name
   puts "URL has set to : #{BaseUrl}"
   puts "Running Scenario: #{@current_scenario_name}"
@@ -121,6 +130,7 @@ def run_local
 end
 
 AllureCucumber.configure do |config|
+  #not working
   if @local_parameter == true
     config.environment = 'stage'
   elsif @local_parameter == false

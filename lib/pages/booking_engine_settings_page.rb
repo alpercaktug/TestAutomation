@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BookingEngineSettingsPage
+class BookingEngineSettingsPage < BasePage
   include PageObject
 
   link(:settings, xpath: '//a[@aria-controls="settings-tab-form"]')
@@ -16,16 +16,10 @@ class BookingEngineSettingsPage
   end
 
   def enable_setting(setting, ability)
-    sleep 5
-    if ability == 'enabled'
-      check_bar
-      sleep 5
-    elsif ability == 'disabled'
-      uncheck_bar
-      sleep 5
-    end
+    sleep 3
+    check_checkbox(setting, ability)
     save
-    sleep 5
+    sleep 3
   end
 end
 

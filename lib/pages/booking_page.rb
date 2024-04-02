@@ -12,6 +12,7 @@ class BookingPage < BasePage
   button(:search_button, xpath: '//div[@class="field field-search"]/button')
   button(:add_room_button, value: 'Add room')
   button(:continue_button, value: 'Continue')
+  button(:select_recommend_room, xpath: '//button[@name="button"]')
 
   button(:increase_room_button, xpath: "//div[@class='rate-table']//button[@class='increment']")
   button(:increase_adult_button, xpath: '//div[@class="room-body"]//div[@class="input-row"][1]//button[@class="increment"]')
@@ -29,6 +30,8 @@ class BookingPage < BasePage
 
   div(:invalid_promo_code, xpath: '//div[@class="couponCodeMessage"]')
   div(:want_to_continue, xpath: '//div[@class="modal-content"]')
+
+  div(:recommend_room_bar, xpath: '//div[@class="recommended-top-bar"]')
 
   def visit_booking_page
     @browser.get "#{BaseUrl}/bv3/search"
@@ -68,8 +71,18 @@ class BookingPage < BasePage
     self
   end
 
-  def click_add_room_button
-    add_room_button
+  # //h3[text()=" Single Room "]/../../..//button[@aria-label="Add room to cart"]
+  # direct with selenium
+  # show rates varsa, click sonra rate seç, (oda ismi değil rate plan locator olacak)
+  # yoksa direkt add room
+  def click_add_room_button room_name
+    room_locator = Helper.new.room_locator_mapping(room_name)
+    click(:name, room_locator)
+    self
+  end
+
+  def click_select_recommend_room
+    select_recommend_room
     self
   end
 
@@ -137,5 +150,13 @@ class BookingPage < BasePage
 
   def want_to_continue_message?
     want_to_continue?
+  end
+
+  def recommend_room?
+    self.wait_until(5, 'Element not found on page') do
+      return self.recommend_room_bar?
+    rescue Selenium::WebDriver::Error::TimeOutError
+      return false
+    end
   end
 end

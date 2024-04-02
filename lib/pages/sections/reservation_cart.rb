@@ -12,19 +12,19 @@ class ReservationCart < BasePage
   end
 
   def check_in_date
-    cart_container_element.div_element(class: 'dates-info').div_elements[0].text.strip
+    cart_container_element.div_element(class: 'dates-info').div_elements[0].text
   end
 
   def check_out_date
-    cart_container_element.div_element(class: 'dates-info').div_elements[1].text.strip
+    cart_container_element.div_element(class: 'dates-info').div_elements[1].text
   end
 
   def room_info
-    cart_container_element.div_element(class: 'guest-info').text.strip
+    cart_container_element.div_element(class: 'guest-info').text
   end
 
   def subtotal_price
-    price_label = cart_container_element.span_element(class: 'sub-total-price').text.strip
+    price_label = cart_container_element.span_element(class: 'sub-total-price').text
     Helper.new.convert_label_to_price(price_label)
   end
 
@@ -36,6 +36,14 @@ class ReservationCart < BasePage
   def discount_price
     price_label = cart_container_element.span_element(class: 'discount-price').text.strip
     Helper.new.convert_label_to_price(price_label)
+  end
+
+  def coupon_code_label
+    cart_container_element.div_element(class: 'promo-valid').span_element.text
+  end
+
+  def remove_coupon_code
+    cart_container_element.div_element(class: 'promo-valid').button_element.click
   end
 
   # Method to interact with room elements with room type
@@ -52,20 +60,6 @@ class ReservationCart < BasePage
         price = room_div.span(class: 'price').text.strip
         room_info << { room_type: room_type, rate_plan: rate_plan, count: count, price: price }
       end
-    end
-    room_info
-  end
-
-  def get_room_info_all
-    room_divs = cart_container_element.divs(class: 'room')
-    room_info = []
-
-    room_divs.each do |room_div|
-      room_type = room_div.span(class: 'item-title').text.strip
-      rate_plan = room_div.span(class: 'rate-plan').text.strip
-      count = room_div.span(class: 'count').text.strip
-      price = room_div.span(class: 'price').text.strip
-      room_info << { room_type: room_type, rate_plan: rate_plan, count: count, price: price }
     end
     room_info
   end
@@ -90,5 +84,21 @@ class ReservationCart < BasePage
       end
     end
     extra_info
+  end
+
+
+  def write_cart_details
+    puts cart_title
+    puts check_in_date
+    puts check_out_date
+
+    puts room_info
+    puts subtotal_price
+    puts total_price
+    puts discount_price
+
+    puts coupon_code_label
+    sleep 5
+
   end
 end

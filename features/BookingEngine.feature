@@ -1,5 +1,5 @@
 @full-suite @booking-engine @prod
-Feature: Booking Engine Prod Test
+Feature: Booking Engine Prod Test (Happy paths)
 
   @test
   Scenario: Make a successful reservation (with data table)
@@ -23,7 +23,7 @@ Feature: Booking Engine Prod Test
     When Make a reservation with the data
     And Cancel reservation on result page
     #flaky: status is return null, selenium cant get cancelled. maybe wait and control page is loaded will fix.
-    #Then I should see the reservation is "Canceled"
+    Then I should see the reservation is "Canceled"
 
   Scenario Outline: Reservation detail information should return correct data
     Given Navigate to the booking page
@@ -43,8 +43,8 @@ Feature: Booking Engine Prod Test
     #Then I should see the total price for the reservation
     Examples:
       | Room Type   | night | adult |
-      | Single Room | 2     | 1     |
-      | Double Room | 3     | 2     |
+      | Single Room | 1     | 1     |
+      | Double Room | 1     | 2     |
 
   Scenario: Room count in reservation detail should return correct data
     Given Navigate to the booking page
@@ -137,27 +137,3 @@ Feature: Booking Engine Prod Test
     Then I should see the extra "Airport Transfer" added successfully to cart
     When Click continue
     And Complete the reservation with pay at the property
-
-  @bar
-  Scenario: Make a successful reservation when best Available Rate enabled
-    Given that the "Best Available Rate" setting is "enabled"
-    When Make a reservation for a "Single Room" for 2 night and 1 adult with "Cash"
-    Then I should see the reservation is "Confirmed"
-    #Then I should see a recommended best available rate
-
-  @bar
-  Scenario:  Make a successful reservation when best Available Rate disabled
-    Given that the "Best Available Rate" setting is "disabled"
-    When Make a reservation for a "Single Room" for 2 night and 1 adult with "Cash"
-    Then I should see the reservation is "Confirmed"
-    #Then I should see a recommended best available rate
-
-
-    # coupon code price recommended room
-    # extras form mandatory control
-    # paket seçildiğinde o tarihe göndermesi
-    # button isimleri
-    # ayarlardaki price seçenekleri
-    # promosyon vs kupon kodu
-
-

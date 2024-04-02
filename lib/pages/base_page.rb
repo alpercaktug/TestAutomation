@@ -58,6 +58,26 @@ class BasePage
     element
   end
 
+  def check_checkbox(item, state)
+
+    helper = Helper.new
+
+    xpath_parameter = helper.settings_mapping(item)
+
+    element = get_element(:xpath, "//*[@id='#{xpath_parameter}']")
+
+    if (!element.selected? && state == 'enabled')
+      element.click
+      puts "box selected"
+    elsif (element.selected? && state == 'disabled')
+      element.click
+      puts "box deselected"
+    else
+      puts "box is already you want"
+    end
+  end
+
+
   def element_count_with_js(xpath)
     sleep 5
     xpath_expression = "count(#{xpath})"

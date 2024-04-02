@@ -1,0 +1,26 @@
+{
+  "staging": {
+    "base_url": "testautomation-staging.hotelrunner.com",
+    "test_rooms": {
+      "single_room": {
+        "id": "",
+        "title": "Single Room",
+        "rates": {
+          "master_rate": ""
+        }
+      }
+    }
+  },
+  "prod": {
+    "base_url": "testautomation.hotelrunner.com",
+    "test_rooms": {
+      "single_room": {
+        "id": "",
+        "title": "Single Room",
+        "rates": {
+          "master_rate": ""
+        }
+      }
+    }
+  }
+}

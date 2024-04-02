@@ -50,12 +50,14 @@ class PaymentPage < BasePage
   end
 
   def select_payment_method(payment_method)
+    sleep 5
     case payment_method
     when 'Cash'
       click(:xpath, '//span[text()="Cash"]/..')
     when 'Mail Order'
       click(:xpath, '//span[text()="Mail Order"]/..')
       sleep 4
+      fill_card_form('5398075236529914', '000', '01/27', 'first', 'last')
     when 'Bank Transfer'
       click(:xpath, '//span[text()="Bank Transfer"]/..')
     else

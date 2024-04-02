@@ -73,3 +73,21 @@ Then(/^I should see the extra "([^"]*)" added successfully to cart$/) do |extra_
 
   expect(ReservationCart.new(@browser).total_price).to eq (actual_total)
 end
+
+
+Then(/^I should see recommended room bar is "([^"]*)"$/) do |state|
+  actual = BookingPage.new(@browser).recommend_room?
+  sleep 5
+  if state == 'enable'
+    expect(actual).to eq true
+  elsif state == 'disable'
+    expect(actual).to eq false
+  end
+end
+
+Then(/^I should see the coupon name is "([^"]*)" on the reservation details$/) do |coupon_name|
+  sleep 5
+  discount_label = ReservationCart.new(@browser).coupon_code_label
+  puts discount_label
+  expect(discount_label).to eq(coupon_name), "There is no coupon name or your coupon name isn't here."
+end

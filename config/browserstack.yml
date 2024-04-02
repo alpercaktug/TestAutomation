@@ -1,0 +1,14 @@
+userName: alperctest_Ug4qG2
+accessKey: eyEAqzbsNpYEX2sHhUGH
+platforms:
+  - os: OS X
+    osVersion: Sonoma
+    browserName: Chrome
+    browserVersion: 121.0
+parallelsPerPlatform: 1
+browserstackLocal: true
+buildName: bstack-demo
+projectName: BrowserStack Sample
+debug: true
+networkLogs: true
+consoleLogs: info
