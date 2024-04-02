@@ -1,4 +1,4 @@
-@full-suite @booking-engine
+@full-suite @booking-engine-conf
 Feature: Booking Engine Configurations
 
   Scenario: Auto-Confirm Paid Reservations enabled
