@@ -6,7 +6,7 @@ require 'cucumber'
 
 task :run do
   tags = ENV['TAGS'] || '@smoke' # Use default tag if TAGS environment variable is not set
-  platform = ENV['PLATFORM'] || 'local'
+  platform = ENV['PLATFORM'] || 'browserstack'
   env = ENV['ENV'] || 'prod'
 
   puts "#{tags} tests started."
