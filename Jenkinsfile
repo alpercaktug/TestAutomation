@@ -16,7 +16,8 @@ pipeline {
                    steps {
                        script {
                            try {
-                               sh 'cucumber --tags ${TAG}'
+                               sh 'rake run TAGS="${TAG}" ENV="${ENV}"'
+                               // sh 'cucumber --tags ${TAG}'
                            } catch (Exception e) {
                                currentBuild.result = 'UNSTABLE' // Mark the build as unstable if tests fail
                                echo "Tests failed but continuing the pipeline."
