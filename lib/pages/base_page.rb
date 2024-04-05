@@ -60,9 +60,10 @@ class BasePage
 
   def check_checkbox(item, state)
 
-    helper = Helper.new
+    # helper = Helper.new
 
-    xpath_parameter = helper.settings_mapping(item)
+    xpath_parameter = Helper.settings_mapping(item)
+
 
     element = get_element(:xpath, "//*[@id='#{xpath_parameter}']")
 

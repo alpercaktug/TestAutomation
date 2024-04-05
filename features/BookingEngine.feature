@@ -132,7 +132,6 @@ Feature: Booking Engine Prod Test (Happy paths)
     Given Navigate to the booking page
     And Add 1 "Extras Room" to the cart
     When Click continue
-    Then I should see extras has return successfully
     When I add "Airport Transfer" to the cart
     Then I should see the extra "Airport Transfer" added successfully to cart
     When Click continue

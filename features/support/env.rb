@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'page-object'
 require 'allure-cucumber'
 require 'page-object/page_factory'
@@ -7,93 +5,76 @@ require 'logger'
 require 'json'
 require 'yaml'
 
-
 World(PageObject::PageFactory)
 
-USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_Ug4qG2'
-ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'eyEAqzbsNpYEX2sHhUGH'
+USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_V0HSlO'
+ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'EG1QJWQGruPKrykyaGyS'
 
-BaseUrl = 'https://testautomation.hotelrunner.com'
-
-
-BeforeAll do
-  puts 'Setting environment and test data'
-  # Başlangıçta test data jsondan verilen env için olan bloğu al ve sakla
-  # tüm testlerde onu kullan
-end
-
-
-Before('@stage') do
-  puts 'tests will run at staging env'
-  @local_parameter = 'true'
-end
-
-Before('@prod') do
-  puts 'tests will run at prod env'
-  @local_parameter = 'false'
-end
-
+$BaseUrl = ENV['BASE_URL'] || 'https://testautomation.hotelrunner.com'
 
 Before do |scenario|
-
   @current_scenario_name = scenario.name
-  puts "URL has set to : #{BaseUrl}"
+
+  puts "URL has been set to: #{$BaseUrl}"
   puts "Running Scenario: #{@current_scenario_name}"
 
-  case ENV['PLATFORM']
-  when 'local'
-    run_local
-  when 'browserstack'
-    connect_browserstack
-  else
-    # raise "Unsupported platform: #{ENV['PLATFORM']}"
-    connect_browserstack
-  end
+  setup_env
+  setup_browser
 end
 
 After do
   @browser.quit
 end
 
-After('@cancel') do
-  step 'Cancel reservation on result page'
-  step 'I should see the reservation is "Canceled"'
-  puts 'Reservation canceled'
+def setup_env
+  $BaseUrl = if ENV['ENV'] == 'staging'
+    'https:/testautomation-staging.hotelrunner.com'
+  else
+    'https://testautomation.hotelrunner.com'
+             end
+end
+
+def setup_browser
+  if ENV['PLATFORM'] == 'browserstack'
+    connect_browserstack
+  else
+    connect_browserstack
+  end
 end
 
 def connect_browserstack
   caps = [{
-    'browserName' => 'Chrome',
-    'browserVersion' => 'latest',
-    'os' => 'OS X',
-    'osVersion' => 'Sonoma',
-    'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
-    'sessionName' => "#{@current_scenario_name} -- Chrome",
-    'debug' => 'true',
-    'networkLogs' => 'true',
-    'consoleLogs' => 'info',
-    'local' => @local_parameter.to_s
-  }, {
-    'browserName' => 'Safari',
-    'browserVersion' => '15.6',
-    'os' => 'OS X',
-    'osVersion' => 'Monterey',
-    'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
-    'sessionName' => "#{@current_scenario_name} -- Safari",
-    'debug' => 'true',
-    'networkLogs' => 'true',
-    'consoleLogs' => 'info'
-  }, {
-    'browserName' => 'firefox',
-    'browserVersion' => 'latest-beta',
-    'os' => 'Windows',
-    'osVersion' => '10',
-    'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
-    'sessionName' => "#{@current_scenario_name} -- firefox",
-    'debug' => 'true',
-    'networkLogs' => 'true',
-    'consoleLogs' => 'info'
-  }]
+            'browserName' => 'Chrome',
+            'browserVersion' => 'latest',
+            'os' => 'OS X',
+            'osVersion' => 'Sonoma',
+            'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
+            'sessionName' => "#{@current_scenario_name} -- Chrome",
+            'debug' => 'true',
+            'networkLogs' => 'true',
+            'consoleLogs' => 'info',
+            'local' => @local_parameter.to_s
+          }, {
+            'browserName' => 'Safari',
+            'browserVersion' => '15.6',
+            'os' => 'OS X',
+            'osVersion' => 'Monterey',
+            'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
+            'sessionName' => "#{@current_scenario_name} -- Safari",
+            'debug' => 'true',
+            'networkLogs' => 'true',
+            'consoleLogs' => 'info'
+          }, {
+            'browserName' => 'firefox',
+            'browserVersion' => 'latest-beta',
+            'os' => 'Windows',
+            'osVersion' => '10',
+            'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
+            'sessionName' => "#{@current_scenario_name} -- firefox",
+            'debug' => 'true',
+            'networkLogs' => 'true',
+            'consoleLogs' => 'info'
+          }]
 
 
   bstack_options = caps[0]
@@ -102,23 +83,20 @@ def connect_browserstack
   options.browser_name = bstack_options['browserName'].downcase
   options.add_option('bstack:options', bstack_options)
   @browser = Selenium::WebDriver.for(:remote, url: "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
-                                              capabilities: options)
-  #@browserstack_session_url = @browser.session_id
+                                     capabilities: options)
   response = @browser.execute_script('browserstack_executor: {"action": "getSessionDetails"}')
-  #puts response
 
   parsed_response = JSON.parse(response)
 
-  # Get the value of 'public_url'
   public_url = parsed_response['public_url']
 
   puts "Public URL: #{public_url}"
 
   Allure.add_link(name: 'BrowserStack Session', url: public_url)
 
-
   @browser.manage.window.maximize
   @browser.manage.timeouts.implicit_wait = 10
+
 end
 
 def run_local
@@ -126,31 +104,17 @@ def run_local
 
   @browser = Selenium::WebDriver.for :chrome, options: options
   @browser.manage.window.maximize
-  # @browser.manage.timeouts.implicit_wait = 10
 end
 
 AllureCucumber.configure do |config|
-  #not working
-  if @local_parameter == true
-    config.environment = 'stage'
-  elsif @local_parameter == false
-    config.environment = 'prod'
-  end
+  config.environment = ENV['ENV'] || 'prod'
   config.results_directory = 'allure-result'
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
   config.logger = Logger.new($stdout, Logger::DEBUG)
 
-
-  # these are used for creating links to bugs or test cases where {} is replaced with keys of relevant items
-  # config.link_tms_pattern = "http://www.jira.com/browse/{}"
-  # config.link_issue_pattern = "http://www.jira.com/browse/{}"
-
-  # additional metadata
   # environment.properties
   config.environment_properties = {
     custom_attribute: 'foo'
   }
-  # categories.json
-  # config.categories = File.new("my_custom_categories.json")
 end

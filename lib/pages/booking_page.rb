@@ -34,7 +34,7 @@ class BookingPage < BasePage
   div(:recommend_room_bar, xpath: '//div[@class="recommended-top-bar"]')
 
   def visit_booking_page
-    @browser.get "#{BaseUrl}/bv3/search"
+    @browser.get "#{$BaseUrl}/bv3/search"
     self
   end
 

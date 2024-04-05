@@ -18,7 +18,7 @@ class Helper
     amount_with_currency.gsub(/[^\d.-]/, '').to_f
   end
 
-  def settings_mapping(text)
+  def self.settings_mapping(text)
     mappings = {
       'Auto-confirm paid reservations' => 'preferred_settings_store_preferred_auto_confirm_paid_reservations',
       'Auto-confirm all reservations' => 'preferred_settings_store_preferred_auto_confirm_all_reservations',

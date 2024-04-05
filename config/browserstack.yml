@@ -4,8 +4,15 @@ platforms:
   - os: OS X
     osVersion: Sonoma
     browserName: Chrome
-    browserVersion: 121.0
-parallelsPerPlatform: 1
+    browserVersion: latest
+  - os: Windows
+    osVersion: 11
+    browserName: Firefox
+    browserVersion: latest
+  - os: Windows
+    osVersion: 11
+    browserName: Chrome
+    browserVersion: latest
 browserstackLocal: true
 buildName: bstack-demo
 projectName: BrowserStack Sample

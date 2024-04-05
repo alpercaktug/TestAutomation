@@ -7,8 +7,11 @@ require 'cucumber'
 task :run do
   tags = ENV['TAGS'] || '@smoke' # Use default tag if TAGS environment variable is not set
   platform = ENV['PLATFORM'] || 'local'
+  env = ENV['ENV'] || 'prod'
 
-  puts "Tests run on: #{platform}"
+  puts "#{tags} tests started."
+  puts "Tests will run: #{platform}"
+  puts "Tests will run: #{env}"
 
   sh "cucumber --tags #{tags}"
   #sh 'bundle exec allure serve allure-report/allure-result'
