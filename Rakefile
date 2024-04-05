@@ -10,8 +10,8 @@ task :run do
   env = ENV['ENV'] || 'prod'
 
   puts "#{tags} tests started."
-  puts "Tests will run: #{platform}"
-  puts "Tests will run: #{env}"
+  puts "Test execution platform: #{platform}"
+  puts "Environment: #{env}"
 
   sh "cucumber --tags #{tags}"
   #sh 'bundle exec allure serve allure-report/allure-result'

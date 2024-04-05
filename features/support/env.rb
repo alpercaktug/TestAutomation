@@ -7,19 +7,20 @@ require 'yaml'
 
 World(PageObject::PageFactory)
 
-USER_NAME = ENV['BROWSERSTACK_USERNAME'] || 'alperctest_V0HSlO'
-ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || 'EG1QJWQGruPKrykyaGyS'
+@browserstack_config = YAML.load_file('config/browserstack.yml')
 
-$BaseUrl = ENV['BASE_URL'] || 'https://testautomation.hotelrunner.com'
+USER_NAME = ENV['BROWSERSTACK_USERNAME'] || @browserstack_config['userName']
+ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || @browserstack_config['accessKey']
+ENVIRONMENT = ENV['ENV'] || 'prod'
 
 Before do |scenario|
+  setup_env
+  setup_browser
+
   @current_scenario_name = scenario.name
 
   puts "URL has been set to: #{$BaseUrl}"
   puts "Running Scenario: #{@current_scenario_name}"
-
-  setup_env
-  setup_browser
 end
 
 After do
@@ -27,61 +28,38 @@ After do
 end
 
 def setup_env
-  $BaseUrl = if ENV['ENV'] == 'staging'
-    'https:/testautomation-staging.hotelrunner.com'
-  else
-    'https://testautomation.hotelrunner.com'
-             end
+  @env_config = YAML.load_file('config/env.yml')
+
+  $BaseUrl = @env_config[ENVIRONMENT][0]['base_url']
+  puts $BaseUrl
+
 end
 
 def setup_browser
-  if ENV['PLATFORM'] == 'browserstack'
-    connect_browserstack
+  if ENV['PLATFORM'] == 'local'
+    run_local
   else
     connect_browserstack
   end
 end
 
 def connect_browserstack
-  caps = [{
-            'browserName' => 'Chrome',
-            'browserVersion' => 'latest',
-            'os' => 'OS X',
-            'osVersion' => 'Sonoma',
-            'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
-            'sessionName' => "#{@current_scenario_name} -- Chrome",
-            'debug' => 'true',
-            'networkLogs' => 'true',
-            'consoleLogs' => 'info',
-            'local' => @local_parameter.to_s
-          }, {
-            'browserName' => 'Safari',
-            'browserVersion' => '15.6',
-            'os' => 'OS X',
-            'osVersion' => 'Monterey',
-            'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
-            'sessionName' => "#{@current_scenario_name} -- Safari",
-            'debug' => 'true',
-            'networkLogs' => 'true',
-            'consoleLogs' => 'info'
-          }, {
-            'browserName' => 'firefox',
-            'browserVersion' => 'latest-beta',
-            'os' => 'Windows',
-            'osVersion' => '10',
-            'buildName' => "#{Time.now.strftime('%d-%m-%Y')}-tests",
-            'sessionName' => "#{@current_scenario_name} -- firefox",
-            'debug' => 'true',
-            'networkLogs' => 'true',
-            'consoleLogs' => 'info'
-          }]
+  @browserstack_config = YAML.load_file('config/browserstack.yml')
 
+  if @browserstack_config['platforms'].nil? || @browserstack_config['platforms'].empty?
+    puts 'No platform configuration found in browserstack.yml'
+    return
+  end
 
-  bstack_options = caps[0]
+  cap = @browserstack_config['platforms'][0] # Select platform in the configuration
 
-  options = Selenium::WebDriver::Options.send 'chrome'
-  options.browser_name = bstack_options['browserName'].downcase
-  options.add_option('bstack:options', bstack_options)
+  options = Selenium::WebDriver::Options.send cap['browserName'].downcase
+
+  cap['buildName'] = "#{Time.now.strftime('%d-%m-%Y')}-tests"
+  cap['sessionName'] = "#{@current_scenario_name} -- #{cap['browserName']}"
+
+  options.add_option('bstack:options', cap)
+
   @browser = Selenium::WebDriver.for(:remote, url: "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
                                      capabilities: options)
   response = @browser.execute_script('browserstack_executor: {"action": "getSessionDetails"}')
@@ -96,7 +74,6 @@ def connect_browserstack
 
   @browser.manage.window.maximize
   @browser.manage.timeouts.implicit_wait = 10
-
 end
 
 def run_local

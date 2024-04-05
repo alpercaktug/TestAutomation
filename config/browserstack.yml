@@ -1,21 +1,26 @@
-userName: alperctest_Ug4qG2
-accessKey: eyEAqzbsNpYEX2sHhUGH
+userName: alperctest_V0HSlO
+accessKey: EG1QJWQGruPKrykyaGyS
 platforms:
   - os: OS X
     osVersion: Sonoma
     browserName: Chrome
     browserVersion: latest
+    debug: true
+    networkLogs: true
+    consoleLogs: info
   - os: Windows
     osVersion: 11
     browserName: Firefox
     browserVersion: latest
+    debug: true
+    networkLogs: true
+    consoleLogs: info
   - os: Windows
     osVersion: 11
     browserName: Chrome
     browserVersion: latest
-browserstackLocal: true
+    debug: true
+    networkLogs: true
+    consoleLogs: info
 buildName: bstack-demo
 projectName: BrowserStack Sample
-debug: true
-networkLogs: true
-consoleLogs: info
