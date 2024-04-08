@@ -8,7 +8,7 @@ require_relative '../../lib/pages/extra_page'
 Then(/^I should see the reservation is "([^"]*)"$/) do |state|
   result = SummaryPage.new(@browser).result_state
   expect(result).to eq(state), "Expected state #{state}, but is was #{result}"
-  puts 'test'
+  puts 'test2'
 end
 
 Then(/^I should see a list of available rooms$/) do
