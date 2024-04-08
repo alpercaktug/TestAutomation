@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+#test
 require_relative '../../lib/pages/booking_page'
 require_relative '../../lib/pages/payment_page'
 require_relative '../../lib/pages/summary_page'
