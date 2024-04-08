@@ -8,7 +8,7 @@ Feature: Booking Engine Prod Test (Happy paths)
       | 1     | 2           | 0           | Double Room | Cash           |
     When Make a reservation with the data
     Then I should see the reservation is "Confirmed"
-
+@test
   Scenario: View Available Rooms
     Given Navigate to the booking page
     When Search for an available room for 1 night
