@@ -1,7 +1,7 @@
 @full-suite @booking-engine @prod
 Feature: Booking Engine Prod Test (Happy paths)
 
-  @test2
+  @test
   Scenario: Make a successful reservation (with data table)
     Given I have the following data
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
