@@ -3,9 +3,6 @@ pipeline {
      environment {
         PATH = "/usr/share/rvm/gems/ruby-3.2.2/bin:/usr/share/rvm/gems/ruby-3.2.2@global/bin:/usr/share/rvm/rubies/ruby-3.2.2/bin:/usr/share/rvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
         }
-     triggers {
-         githubPush()
-        }
     stages {
         stage('Install dependencies') {
             steps {
