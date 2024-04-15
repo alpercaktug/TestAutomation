@@ -41,18 +41,42 @@ pipeline {
         }
         stage('Update GitHub Pull Request Status') {
             steps {
-            script {
-                   githubPRStatusPublisher([
-                           buildMessage: message(failureMsg: githubPRMessage('Can\'t set status; build failed.'),
-                           successMsg: githubPRMessage('Can\'t set status; build succeeded.')),
-                           statusMsg: githubPRMessage('${GITHUB_PR_COND_REF} run ended'),
-                           unstableAs: 'FAILURE'
-                           ])
-            }
-            }
+            post {
+                            success {
+                                script {
+                                    updateGitHubPRLabel("success")
+                                }
+                            }
+                            failure {
+                                script {
+                                    updateGitHubPRLabel("failure")
+                                }
+                            }
         }
 
     }
+    def updateGitHubPRLabel(String status) {
+         // GitHub credentials
+         withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
+             def apiUrl = "https://api.github.com/repos/owner/repo/issues/${env.CHANGE_ID}/labels"
+             def payload = [
+                 labels: [status]
+             ]
+             def response = httpRequest(
+                 acceptType: 'APPLICATION_JSON',
+                 contentType: 'APPLICATION_JSON',
+                 httpMode: 'POST',
+                 url: apiUrl,
+                 authentication: 'BASIC',
+                 username: env.GITHUB_USERNAME,
+                 password: env.GITHUB_TOKEN,
+                 requestBody: groovy.json.JsonOutput.toJson(payload)
+             )
+             if (response.status != 200) {
+                 error "Failed to update label on GitHub PR: ${response.status} - ${response.content}"
+             }
+         }
+     }
 }
 
 
