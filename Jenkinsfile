@@ -39,17 +39,5 @@ pipeline {
             }
         }
     } // End of stages
-    post {
-        success {
-            script {
-                githubPRAddLabels labelProperty: labels('success')
-            }
-        }
-        failure {
-            script {
-                githubPRAddLabels labelProperty: labels('failure')
-            }
-        }
-    }
 } // End of pipeline
 
