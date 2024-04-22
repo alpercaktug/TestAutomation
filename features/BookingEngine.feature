@@ -7,7 +7,7 @@ Feature: Booking Engine Prod Test (Happy paths)
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
       | 1     | 2           | 0           | Double Room | Cash           |
     When Make a reservation with the data
-    Then I should see the reservation is "Confirmed"
+    Then I should see the reservation is "Confrmed"
 
   Scenario: View Available Rooms
     Given Navigate to the booking page

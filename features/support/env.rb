@@ -14,10 +14,11 @@ ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || @browserstack_config['accessKey']
 ENVIRONMENT = ENV['ENV'] || 'prod'
 
 Before do |scenario|
-  setup_env
-  setup_browser
 
   @current_scenario_name = scenario.name
+
+  setup_env
+  setup_browser
 
   puts "URL has been set to: #{$BaseUrl}"
   puts "Running Scenario: #{@current_scenario_name}"
