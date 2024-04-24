@@ -1,0 +1,14 @@
+staging:
+  - Standard Room: buttona33361
+  - Single Room: buttona33327
+  - Double Room: buttona33328
+  - Extras Room: buttona33329
+  - Bar Room: buttona33360
+  - Family Room: buttona33330
+prod:
+  - Standard Room: buttona820661
+  - Single Room: buttona804051
+  - Double Room: buttona787279
+  - Extras Room: buttona793471
+  - Bar Room: buttona787278
+  - Family Room: buttona787285

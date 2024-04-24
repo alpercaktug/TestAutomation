@@ -4,8 +4,8 @@ Feature: Booking Engine Prod Test (Happy paths)
   @test
   Scenario: Make a successful reservation (with data table)
     Given I have the following data
-      | Night | Adult Count | Child Count | Room Type   | Payment Method |
-      | 1     | 2           | 0           | Double Room | Cash           |
+      | Night | Adult Count | Child Count | Room Type     | Payment Method |
+      | 1     | 2           | 0           | Standard Room | Cash           |
     When Make a reservation with the data
     Then I should see the reservation is "Confirmed"
 
@@ -19,7 +19,7 @@ Feature: Booking Engine Prod Test (Happy paths)
   Scenario: Cancel a reservation on result page
     And I have the following data
       | Night | Adult Count | Child Count | Room Type   | Payment Method |
-      | 1     | 2           | 0           | Double Room | Cash           |
+      | 1     | 2           | 0           | Standard Room | Cash           |
     When Make a reservation with the data
     And Cancel reservation on result page
     #flaky: status is return null, selenium cant get cancelled. maybe wait and control page is loaded will fix.
@@ -43,15 +43,15 @@ Feature: Booking Engine Prod Test (Happy paths)
     #Then I should see the total price for the reservation
     Examples:
       | Room Type   | night | adult |
-      | Single Room | 1     | 1     |
+      | Standard Room | 1     | 1     |
       | Double Room | 1     | 2     |
 
   Scenario: Room count in reservation detail should return correct data
     Given Navigate to the booking page
     And Search for an available room for 1 adult
-    When Add 2 "Single Room" to the cart
+    When Add 2 "Standard Room" to the cart
     And Add 1 "Double Room" to the cart
-    Then I should see 2 "Single Room" has added on reservation details
+    Then I should see 2 "Standard Room" has added on reservation details
     And I should see 1 "Double Room" has added on reservation details
 
   Scenario Outline: Mandatory field controls on payment page
@@ -70,7 +70,7 @@ Feature: Booking Engine Prod Test (Happy paths)
     Given Navigate to the booking page
     When Search for an available room for 1 night
     And Search for an available room for 1 adult
-    And Add 1 "Single Room" to the cart
+    And Add 1 "Standard Room" to the cart
     And Click continue
     And Fill contact form
     And Complete the reservation with mail order
@@ -82,7 +82,7 @@ Feature: Booking Engine Prod Test (Happy paths)
     Given Navigate to the booking page
     When Search for an available room for 1 night
     And Search for an available room for 1 adult
-    And Add 1 "Double Room" to the cart
+    And Add 1 "Standard Room" to the cart
     And Click continue
     And Fill contact form
     And Complete the reservation with mail order
@@ -95,7 +95,7 @@ Feature: Booking Engine Prod Test (Happy paths)
     Given Navigate to the booking page
     When Search for an available room for 1 night
     And Search for an available room for 1 adult
-    And Add 1 "Single Room" to the cart
+    And Add 1 "Standard Room" to the cart
     And Apply a coupon code that "820F4F"
     Then I should see that the coupon discount is successful in reservation detail
 
@@ -111,14 +111,14 @@ Feature: Booking Engine Prod Test (Happy paths)
     Given Navigate to the booking page
     When Search for an available room for 1 night
     And Search for an available room for 1 adult
-    And Add 2 "Single Room" to the cart
+    And Add 2 "Standard Room" to the cart
     When Click continue
     Then I should see do you want to continue dialog
 
   Scenario: Sure about changing your dates? dialog
     Given Navigate to the booking page
     And Search for an available room for 1 night
-    And Add 1 "Double Room" to the cart
+    And Add 1 "Standard Room" to the cart
     When Search for an available room for 3 night
     Then I should see do you want to continue dialog
 

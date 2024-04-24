@@ -32,12 +32,15 @@ class Helper
 
   # Test automation hotel room locators with name attribute
   def room_locator_mapping(text)
+    @test_data = YAML.load_file('config/test_data.yml')
+
     mappings = {
-      'Single Room' => 'buttona804051',
-      'Double Room' => 'buttona787279',
-      'Extras Room' => 'buttona793471',
-      'Bar Room' => 'buttona787278',
-      'Family Room' => 'buttona787285'
+      'Standard Room' => @test_data[ENVIRONMENT][0]['Standard Room'],
+      'Single Room' => @test_data[ENVIRONMENT][1]['Single Room'],
+      'Double Room' => @test_data[ENVIRONMENT][2]['Double Room'],
+      'Extras Room' => @test_data[ENVIRONMENT][3]['Extras Room'],
+      'Bar Room' => @test_data[ENVIRONMENT][4]['Bar Room'],
+      'Family Room' => @test_data[ENVIRONMENT][5]['Family Room']
       # Add more mappings as needed
     }
     mappings[text]
