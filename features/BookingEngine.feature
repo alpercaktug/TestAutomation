@@ -1,14 +1,15 @@
 @full-suite @booking-engine @prod
 Feature: Booking Engine Prod Test (Happy paths)
 
-  @test
-  Scenario: Make a successful  (with data table)
+
+  Scenario: Make a successful reservation (with data table)
     Given I have the following data
       | Night | Adult Count | Child Count | Room Type     | Payment Method |
       | 1     | 2           | 0           | Standard Room | Cash           |
     When Make a reservation with the data
     Then I should see the reservation is "Confirmed"
 
+  @test
   Scenario: View Available Rooms
     Given Navigate to the booking page
     When Search for an available room for 1 night
