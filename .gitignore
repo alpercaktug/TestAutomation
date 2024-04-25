@@ -1,3 +1,22 @@
-/features/.cucumber+/
-.idea
 
+# Ignore cucumber+ IDE files
+/features/.cucumber+/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Ruby gemset
+Gemfile.lock
+
+# Ignore IDE settings
+.idea/
+
+# Ignore Allure report and results
+allure-report/
+allure-result/
+
+# Ignore compiled code
+lib/*.rb
+
+# Ignore any generated documentation
+doc/
