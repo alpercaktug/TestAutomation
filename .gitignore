@@ -15,9 +15,6 @@ Gemfile.lock
 allure-report/
 allure-result/
 
-# Ignore any local configurations
-config/*.yml
-
 # Ignore compiled code
 lib/*.rb
 
