@@ -2,7 +2,7 @@
 Feature: Booking Engine Prod Test (Happy paths)
 
   @test
-  Scenario: Make a successful reservation (with data table)
+  Scenario: Make a successful  (with data table)
     Given I have the following data
       | Night | Adult Count | Child Count | Room Type     | Payment Method |
       | 1     | 2           | 0           | Standard Room | Cash           |
