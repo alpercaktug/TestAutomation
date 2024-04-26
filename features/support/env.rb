@@ -66,19 +66,29 @@ def connect_browserstack
     return
   end
 
-  cap = @browserstack_config['platforms'][0] # Select platform in the configuration
 
-  options = Selenium::WebDriver::Options.send cap['browserName'].downcase
+  username = ENV["BROWSERSTACK_USERNAME"]
+  access_key = ENV["BROWSERSTACK_ACCESS_KEY"]
+  build_name = ENV["BROWSERSTACK_BUILD_NAME"]
 
-  #cap['buildName'] = "#{Time.now.strftime('%d-%m-%Y')}-tests"
-  cap['buildName'] = ENV["BROWSERSTACK_BUILD_NAME"]
-  cap['sessionName'] = "#{@current_scenario_name}"
-  cap['local'] = true if ENVIRONMENT == 'staging'
+  caps = Selenium::WebDriver::Remote::Capabilities.new
+  caps["os"] = "Windows"
+  caps["os_version"] = "10"
+  caps["browser"] = "chrome"
+  caps["browser_version"] = "latest"
+  caps["name"] = "BStack-[Jenkins] Sample Test" # test name
+  caps["build"] = build_name # CI/CD job name using BROWSERSTACK_BUILD_NAME env variable
+  caps["browserstack.user"] = username
+  caps["browserstack.key"] = access_key
 
-  options.add_option('bstack:options', cap)
+  @browser = Selenium::WebDriver.for(:remote,
+                                   :url => "https://hub-cloud.browserstack.com/wd/hub",
+                                   :desired_capabilities => caps)
 
-  @browser = Selenium::WebDriver.for(:remote, url: "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
-                                     capabilities: options)
+  #@browser = Selenium::WebDriver.for(:remote, url: "https://#{USER_NAME}:#{ACCESS_KEY}@hub.browserstack.com/wd/hub",
+  #capabilities: options)
+
+
   response = @browser.execute_script('browserstack_executor: {"action": "getSessionDetails"}')
 
   parsed_response = JSON.parse(response)
