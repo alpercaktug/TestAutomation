@@ -1,5 +1,5 @@
-userName: alperctest_V0HSlO
-accessKey: EG1QJWQGruPKrykyaGyS
+userName: alper_PVNoKh
+accessKey: V3FnRLzfyz71tx6zQo94
 platforms:
   - os: OS X
     osVersion: Sonoma
@@ -24,3 +24,5 @@ platforms:
     consoleLogs: info
 buildName: bstack-demo
 projectName: BrowserStack Sample
+local: false
+

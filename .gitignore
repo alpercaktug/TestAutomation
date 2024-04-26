@@ -11,6 +11,3 @@
 # Ignore Allure report and results
 allure-report/
 allure-result/
-
-# Ignore any generated documentation
-doc/
