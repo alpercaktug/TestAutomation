@@ -67,7 +67,7 @@ def connect_browserstack
 
   options = Selenium::WebDriver::Options.send cap['browserName'].downcase
 
-  cap['buildName'] =  ENV['BROWSERSTACK_BUILD_NAME']
+  cap['buildName'] = "#{Time.now.strftime('%d-%m-%Y')}-tests"
   cap['sessionName'] = "#{@current_scenario_name}"
   cap['local'] = true if ENVIRONMENT == 'staging'
 
