@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'page-object'
 require 'allure-cucumber'
 require 'page-object/page_factory'
@@ -14,7 +16,6 @@ ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || @browserstack_config['accessKey']
 ENVIRONMENT = ENV['ENV'] || 'prod'
 
 Before do |scenario|
-
   @current_scenario_name = scenario.name
 
   setup_env
@@ -24,16 +25,26 @@ Before do |scenario|
   puts "Running Scenario: #{@current_scenario_name}"
 end
 
-After do
+After do |scenario|
+  if scenario.failed?
+    puts "Scenario '#{scenario.name}' failed!"
+    @browser.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed"}}')
+    # You can add additional actions for failed scenarios here, like taking a screenshot
+    # Example: driver.save_screenshot("failed_scenario.png")
+  else
+    puts "Scenario '#{scenario.name}' passed!"
+    @browser.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed"}}')
+  end
+  # Quit the WebDriver session
   @browser.quit
 end
+
 
 def setup_env
   @env_config = YAML.load_file('config/env.yml')
 
   $BaseUrl = @env_config[ENVIRONMENT][0]['base_url']
   puts $BaseUrl
-
 end
 
 def setup_browser
@@ -57,8 +68,8 @@ def connect_browserstack
   options = Selenium::WebDriver::Options.send cap['browserName'].downcase
 
   cap['buildName'] = "#{Time.now.strftime('%d-%m-%Y')}-tests"
-  #cap['buildName'] = ENV["BROWSERSTACK_BUILD_NAME"]
-  cap['sessionName'] = "#{@current_scenario_name} -- #{cap['browserName']}"
+  cap['sessionName'] = "#{@current_scenario_name}"
+  cap['local'] = true if ENVIRONMENT == 'staging'
 
   options.add_option('bstack:options', cap)
 
