@@ -56,8 +56,8 @@ def connect_browserstack
 
   options = Selenium::WebDriver::Options.send cap['browserName'].downcase
 
-  #cap['buildName'] = "#{Time.now.strftime('%d-%m-%Y')}-tests"
-  cap['buildName'] = ENV["BROWSERSTACK_BUILD_NAME"]
+  cap['buildName'] = "#{Time.now.strftime('%d-%m-%Y')}-tests"
+  #cap['buildName'] = ENV["BROWSERSTACK_BUILD_NAME"]
   cap['sessionName'] = "#{@current_scenario_name} -- #{cap['browserName']}"
 
   options.add_option('bstack:options', cap)
