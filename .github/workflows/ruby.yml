@@ -44,7 +44,7 @@ jobs:
         allure-token: ${{ secrets.ALLURE_TOKEN }}
         allure-project-id: 1
     - name: Run tests
-      run: bundle exec rake run TAGS='@test'
+      run: allurectl watch -- bundle exec rake run TAGS='@test'
       env:
         GITHUB_TESTS_ENDPOINT: ${{ github.event.inputs.GITHUB_TESTS_ENDPOINT }}
         GITHUB_TESTS_BROWSER: ${{ github.event.inputs.GITHUB_TESTS_BROWSER }}
