@@ -9,4 +9,3 @@ gem 'rspec', '~> 3.4'
 gem 'rubocop', group: 'development', require: false
 gem 'selenium-webdriver'
 gem 'test-unit'
-

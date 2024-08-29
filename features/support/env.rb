@@ -14,6 +14,7 @@ World(PageObject::PageFactory)
 USER_NAME = ENV['BROWSERSTACK_USERNAME'] || @browserstack_config['userName']
 ACCESS_KEY = ENV['BROWSERSTACK_ACCESS_KEY'] || @browserstack_config['accessKey']
 ENVIRONMENT = ENV['ENV'] || 'prod'
+PLATFORM = ENV['PLATFORM'] || 'browserstack'
 
 Before do |scenario|
   @current_scenario_name = scenario.name
@@ -28,27 +29,24 @@ end
 After do |scenario|
   if scenario.failed?
     puts "Scenario '#{scenario.name}' failed!"
-    @browser.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed"}}')
-    # You can add additional actions for failed scenarios here, like taking a screenshot
-    # Example: driver.save_screenshot("failed_scenario.png")
+    #@browser.save_screenshot("screenshot/#{scenario.name}.png")
   else
     puts "Scenario '#{scenario.name}' passed!"
-    @browser.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed"}}')
+    if PLATFORM == 'browserstack'
+      @browser.execute_script('browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed"}}')
+    end
   end
-  # Quit the WebDriver session
   @browser.quit
 end
-
 
 def setup_env
   @env_config = YAML.load_file('config/env.yml')
 
   $BaseUrl = @env_config[ENVIRONMENT][0]['base_url']
-  puts $BaseUrl
 end
 
 def setup_browser
-  if ENV['PLATFORM'] == 'local'
+  if PLATFORM == 'local'
     run_local
   else
     connect_browserstack
@@ -91,9 +89,13 @@ end
 
 def run_local
   options = Selenium::WebDriver::Chrome::Options.new
+  #options.add_argument('--headless')
+  #options.add_argument('--window-size=1920,1080')
+  #options.add_argument('--incognito')
 
   @browser = Selenium::WebDriver.for :chrome, options: options
   @browser.manage.window.maximize
+  @browser.manage.timeouts.page_load = 20
 end
 
 AllureCucumber.configure do |config|
