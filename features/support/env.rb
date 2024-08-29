@@ -100,7 +100,7 @@ end
 
 AllureCucumber.configure do |config|
   config.environment = ENV['ENV'] || 'prod'
-  config.results_directory = 'allure-result'
+  config.results_directory = 'allure-results'
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
   config.logger = Logger.new($stdout, Logger::DEBUG)
