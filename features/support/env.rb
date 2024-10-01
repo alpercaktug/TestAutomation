@@ -106,7 +106,4 @@ AllureCucumber.configure do |config|
   #config.logger = Logger.new($stdout, Logger::DEBUG)
 
   # environment.properties
-  config.environment_properties = {
-    custom_attribute: 'foo'
-  }
 end
