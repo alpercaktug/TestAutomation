@@ -76,10 +76,11 @@ jobs:
             echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~/.bashrc
             source ~/.bashrc
             java -version
-      - save_cache:  # Save the Java installation cache
-          paths:
-            - /usr/lib/jvm/java-11-openjdk-amd64
-          key: java-cache-v1
+      - run:
+          name: Install Allure Commandline
+          command: |
+            sudo npm install -g allure-commandline
+            export PATH=$PATH:$(npm bin -g)
       - run:
           name: Execute Tests
           command: |
@@ -87,6 +88,7 @@ jobs:
       - run:
           name: Generate Allure Report
           command: |
+            export PATH=$PATH:$(npm bin -g)  # Ensure the path includes npm binaries
             mkdir -p allure-results
             echo "BRANCH=$CIRCLE_BRANCH" >> allure-results/environment.properties
             echo "COMMIT=$CIRCLE_SHA1" >> allure-results/environment.properties
