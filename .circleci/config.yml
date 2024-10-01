@@ -4,12 +4,7 @@ executors:
   ruby-executor:
     docker:
       - image: circleci/ruby:2.7  # Adjust to your Ruby version
-      - image: circleci/openjdk:11  # OpenJDK 11 provides Java
-        environment:
-          BROWSERSTACK_USERNAME: "<your-browserstack-username>"
-          BROWSERSTACK_ACCESS_KEY: "<your-browserstack-access-key>"
-          JAVA_HOME: "/usr/local/openjdk-11"
-          PATH: "/usr/local/openjdk-11/bin:$PATH"
+      - image: circleci/openjdk:11  # For Allure, requires Java
 
 parameters:
   tags:
@@ -52,10 +47,16 @@ jobs:
           command: |
             sudo npm install -g allure-commandline
       - run:
-          name: Verify Java Installation
+          name: Ensure Java is Installed
           command: |
+            sudo apt-get update
+            sudo apt-get install -y openjdk-11-jdk  # Install Java if not already present
+            export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
+            export PATH="$JAVA_HOME/bin:$PATH"
+            echo 'export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"' >> ~/.bashrc
+            echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~/.bashrc
+            source ~/.bashrc
             java -version
-            echo $JAVA_HOME
       - run:
           name: Execute Tests
           command: |
