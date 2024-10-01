@@ -44,17 +44,6 @@ jobs:
           name: Execute Tests
           command: |
             bundle exec rake run TAGS='<< parameters.tags >>' ENV='<< parameters.env >>' PLATFORM='<< parameters.platform >>'
-      - run:
-          name: Generate Allure Report
-          command: |
-            curl -o allure.zip -L https://github.com/allure-framework/allure2/releases/download/2.18.1/allure-2.18.1.zip
-            unzip allure.zip -d /opt/
-            /opt/allure-2.18.1/bin/allure generate --clean
-      - store_artifacts:
-          path: allure-report
-          destination: allure-report
-      - store_test_results:
-          path: allure-results
 
 workflows:
   version: 2
