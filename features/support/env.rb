@@ -99,7 +99,7 @@ def run_local
 end
 
 AllureCucumber.configure do |config|
-  config.environment = ENV['ENV'] || 'prod'
+  #config.environment = ENV['ENV'] || 'prod'
   config.results_directory = 'allure-results'
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
