@@ -45,26 +45,41 @@ jobs:
           paths:
             - vendor/bundle
           key: bundler-v1-{{ checksum "Gemfile.lock" }}
+      - restore_cache:  # Restore node.js and npm cache
+          keys:
+            - nodejs-npm-cache-v1
       - run:
           name: Install Node.js and npm
           command: |
-            sudo apt-get update
-            sudo apt-get install -y nodejs npm
-      - run:
-          name: Install Allure Commandline
-          command: |
-            sudo npm install -g allure-commandline
+            if ! command -v node > /dev/null || ! command -v npm > /dev/null; then
+              sudo apt-get update
+              sudo apt-get install -y nodejs npm
+            fi
+      - save_cache:  # Save node.js and npm cache
+          paths:
+            - /usr/bin/node
+            - /usr/bin/npm
+          key: nodejs-npm-cache-v1
+      - restore_cache:  # Restore the Java installation cache
+          keys:
+            - java-cache-v1
       - run:
           name: Ensure Java is Installed
           command: |
-            sudo apt-get update
-            sudo apt-get install -y openjdk-11-jdk  # Install Java if not already present
+            if ! command -v java > /dev/null; then
+              sudo apt-get update
+              sudo apt-get install -y openjdk-11-jdk  # Install Java if not already present
+            fi
             export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"
             export PATH="$JAVA_HOME/bin:$PATH"
             echo 'export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64"' >> ~/.bashrc
             echo 'export PATH="$JAVA_HOME/bin:$PATH"' >> ~/.bashrc
             source ~/.bashrc
             java -version
+      - save_cache:  # Save the Java installation cache
+          paths:
+            - /usr/lib/jvm/java-11-openjdk-amd64
+          key: java-cache-v1
       - run:
           name: Execute Tests
           command: |
