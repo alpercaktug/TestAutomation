@@ -103,7 +103,7 @@ AllureCucumber.configure do |config|
   config.results_directory = 'allure-results'
   config.clean_results_directory = true
   config.logging_level = Logger::INFO
-  config.logger = Logger.new($stdout, Logger::DEBUG)
+  #config.logger = Logger.new($stdout, Logger::DEBUG)
 
   # environment.properties
   config.environment_properties = {
