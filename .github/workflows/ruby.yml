@@ -1,51 +1,54 @@
-name: run-and-upload-to-allure-testops
+name: UI Test Automation
 
 on:
   workflow_dispatch:
     inputs:
-      GITHUB_TESTS_ENDPOINT:
-        description: "System under test"
-        required: true
-        default: https://system.under.test
-      GITHUB_TESTS_BROWSER:
-        description: "Browser to be used in tests"
-        required: true
-        default: chrome
-      ALLURE_JOB_RUN_ID:
-        description: "ALLURE_JOB_RUN_ID is service parameter required for triggering workflows from Allure TestOps. Leave blank."
+      TAGS:
+        description: 'Cucumber tags to run'
         required: false
-      ALLURE_USERNAME:
-        description: "ALLURE_USERNAME service parameter. Leave blank"
+        default: '@test'
+      ENV:
+        description: 'Test environment'
         required: false
-
-
-env:
-  ALLURE_RESULTS: "allure-results"
-  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+        default: 'prod'
+      PLATFORM:
+        description: 'Execution platform'
+        required: false
+        default: 'browserstack'
 
 jobs:
-  all-tests:
+  run-tests:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['3.2.2']
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: install and configure allurectl using GH Action
-      uses: allure-framework/setup-allurectl@v1
-      with:
-        allure-endpoint: https://hrtestauto.testops.cloud/
-        allure-token: ${{ secrets.ALLURE_TOKEN }}
-        allure-project-id: 1
-    - name: Run tests
-      run: allurectl watch -- bundle exec rake run TAGS='@test'
-      env:
-        GITHUB_TESTS_ENDPOINT: ${{ github.event.inputs.GITHUB_TESTS_ENDPOINT }}
-        GITHUB_TESTS_BROWSER: ${{ github.event.inputs.GITHUB_TESTS_BROWSER }}
-        GITHUB_TESTS_BRANCH: ${{ github.ref_name }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'  # Specify your Ruby version
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Run UI Tests
+        env:
+          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
+          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
+        run: |
+          bundle exec rake run TAGS='${{ github.event.inputs.TAGS }}' ENV='${{ github.event.inputs.ENV }}' PLATFORM='${{ github.event.inputs.PLATFORM }}'
+
+      - name: Generate Allure Report
+        run: |
+          allure generate --clean
+          # Archive the Allure results directory
+          tar -czf allure-results.tar.gz allure-results
+
+      - name: Upload Allure Report Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path: allure-results.tar.gz
