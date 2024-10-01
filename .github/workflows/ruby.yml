@@ -38,14 +38,3 @@ jobs:
         run: |
           bundle exec rake run TAGS='${{ github.event.inputs.TAGS }}' ENV='${{ github.event.inputs.ENV }}' PLATFORM='${{ github.event.inputs.PLATFORM }}'
 
-      - name: Generate Allure Report
-        run: |
-          allure generate --clean
-          # Archive the Allure results directory
-          tar -czf allure-results.tar.gz allure-results
-
-      - name: Upload Allure Report Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: allure-results
-          path: allure-results.tar.gz
