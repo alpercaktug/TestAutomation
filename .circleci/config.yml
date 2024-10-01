@@ -41,13 +41,21 @@ jobs:
             gem install bundler -v 2.4.22
             bundle install
       - run:
+          name: Install Node.js and npm
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y nodejs npm
+      - run:
+          name: Install Allure Commandline
+          command: |
+            sudo npm install -g allure-commandline
+      - run:
           name: Execute Tests
           command: |
             bundle exec rake run TAGS='<< parameters.tags >>' ENV='<< parameters.env >>' PLATFORM='<< parameters.platform >>'
       - run:
           name: Generate Allure Report
           command: |
-            sudo npm install -g allure-commandline
             echo BRANCH=development >> allure-results/environment.properties
             echo COMMIT=$CI_PULL_REQUEST/commits/$CIRCLE_SHA1 >> allure-results/environment.properties
             allure generate --clean
