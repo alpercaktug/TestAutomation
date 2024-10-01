@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-gem 'allure-cucumber', '~> 0.6.1'
+gem 'allure-cucumber', '~> 2.0'
 gem 'allure-ruby-commons'
 gem 'cucumber'
 gem 'minitest'
