@@ -8,6 +8,8 @@ executors:
         environment:
           BROWSERSTACK_USERNAME: "<your-browserstack-username>"
           BROWSERSTACK_ACCESS_KEY: "<your-browserstack-access-key>"
+          JAVA_HOME: "/usr/lib/jvm/java-11-openjdk-amd64"  # Set JAVA_HOME
+          PATH: "/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH"
 
 parameters:
   tags:
