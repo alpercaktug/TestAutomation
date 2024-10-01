@@ -3,11 +3,22 @@ version: 2.1
 executors:
   ruby-executor:
     docker:
-      - image: circleci/ruby:2.7  # Change to your Ruby version
-      - image: circleci/openjdk:11  # For Allure (requires Java)
+      - image: circleci/ruby:2.7  # Adjust to your Ruby version
+      - image: circleci/openjdk:11  # For Allure, requires Java
         environment:
-          BROWSERSTACK_USERNAME: "alperctest_1Kr4aM"
-          BROWSERSTACK_ACCESS_KEY: "xFCxsqmTmcRZJZNnb3kW"
+          BROWSERSTACK_USERNAME: "<your-browserstack-username>"
+          BROWSERSTACK_ACCESS_KEY: "<your-browserstack-access-key>"
+
+parameters:
+  tags:
+    type: string
+    default: "@test"
+  env:
+    type: string
+    default: "prod"
+  platform:
+    type: string
+    default: "browserstack"
 
 jobs:
   test:
@@ -15,13 +26,13 @@ jobs:
     parameters:
       tags:
         type: string
-        default: "@test"
+        default: "<< pipeline.parameters.tags >>"
       env:
         type: string
-        default: "prod"
+        default: "<< pipeline.parameters.env >>"
       platform:
         type: string
-        default: "browserstack"
+        default: "<< pipeline.parameters.platform >>"
     steps:
       - checkout
       - run:
@@ -47,10 +58,9 @@ jobs:
 
 workflows:
   version: 2
-  test:
+  test-workflow:
     jobs:
       - test:
-          parameters:
-            tags: "@test"
-            env: "prod"
-            platform: "browserstack"
+          tags: "<< pipeline.parameters.tags >>"
+          env: "<< pipeline.parameters.env >>"
+          platform: "<< pipeline.parameters.platform >>"
