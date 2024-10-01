@@ -50,18 +50,10 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt-get install -y nodejs npm
-      - restore_cache:  # Restore the npm cache
-          keys:
-            - npm-cache-{{ checksum "package-lock.json" }}
-            - npm-cache-
       - run:
           name: Install Allure Commandline
           command: |
             sudo npm install -g allure-commandline
-      - save_cache:  # Save npm cache
-          paths:
-            - ~/.npm
-          key: npm-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Ensure Java is Installed
           command: |
