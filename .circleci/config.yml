@@ -32,20 +32,36 @@ jobs:
         default: "<< pipeline.parameters.platform >>"
     steps:
       - checkout
+      - restore_cache:  # Restore the cache for the gems
+          keys:
+            - bundler-v1-{{ checksum "Gemfile.lock" }}  # Uses the Gemfile.lock checksum to restore the cache
+            - bundler-v1-  # Fallback in case there's no exact match
       - run:
           name: Install Dependencies
           command: |
             gem install bundler -v 2.4.22
-            bundle install
+            bundle install --path vendor/bundle
+      - save_cache:  # Save the gems cache
+          paths:
+            - vendor/bundle
+          key: bundler-v1-{{ checksum "Gemfile.lock" }}
       - run:
           name: Install Node.js and npm
           command: |
             sudo apt-get update
             sudo apt-get install -y nodejs npm
+      - restore_cache:  # Restore the npm cache
+          keys:
+            - npm-cache-{{ checksum "package-lock.json" }}
+            - npm-cache-
       - run:
           name: Install Allure Commandline
           command: |
             sudo npm install -g allure-commandline
+      - save_cache:  # Save npm cache
+          paths:
+            - ~/.npm
+          key: npm-cache-{{ checksum "package-lock.json" }}
       - run:
           name: Ensure Java is Installed
           command: |
