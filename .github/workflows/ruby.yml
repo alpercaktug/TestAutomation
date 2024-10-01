@@ -1,32 +1,30 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
-# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
-
-name: Ruby
+name: run-and-upload-to-allure-testops
 
 on:
-  push:
   workflow_dispatch:
     inputs:
+      GITHUB_TESTS_ENDPOINT:
+        description: "System under test"
+        required: true
+        default: https://system.under.test
+      GITHUB_TESTS_BROWSER:
+        description: "Browser to be used in tests"
+        required: true
+        default: chrome
       ALLURE_JOB_RUN_ID:
-        description: ALLURE_JOB_RUN_ID service parameter. Leave blank.
+        description: "ALLURE_JOB_RUN_ID is service parameter required for triggering workflows from Allure TestOps. Leave blank."
+        required: false
       ALLURE_USERNAME:
-        description: ALLURE_USERNAME service parameter. Leave blank.
+        description: "ALLURE_USERNAME service parameter. Leave blank"
+        required: false
+
 
 env:
-  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+  ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
-  ALLURE_ENDPOINT: https://hrtestauto.testops.cloud/
-  ALLURE_PROJECT_ID: 1
-  ALLURE_RESULTS: build/allure-results
-  
 
 jobs:
-  test:
-
+  all-tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -35,13 +33,19 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
       uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: install and configure allurectl using GH Action
+      uses: allure-framework/setup-allurectl@v1
+      with:
+        allure-endpoint: https://hrtestauto.testops.cloud/
+        allure-token: ${{ secrets.ALLURE_TOKEN }}
+        allure-project-id: 1
     - name: Run tests
-      run: bundle exec rake run TAGS='@test'
-
+      run: allurectl watch -- bundle exec rake run TAGS='@test'
+      env:
+        GITHUB_TESTS_ENDPOINT: ${{ github.event.inputs.GITHUB_TESTS_ENDPOINT }}
+        GITHUB_TESTS_BROWSER: ${{ github.event.inputs.GITHUB_TESTS_BROWSER }}
+        GITHUB_TESTS_BRANCH: ${{ github.ref_name }}
