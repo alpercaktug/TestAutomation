@@ -35,9 +35,6 @@ jobs:
           bundle install
 
       - name: Run UI Tests
-        env:
-          BROWSERSTACK_USERNAME: ${{ secrets.BROWSERSTACK_USERNAME }}
-          BROWSERSTACK_ACCESS_KEY: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
         run: |
           bundle exec rake run TAGS='${{ github.event.inputs.TAGS }}' ENV='${{ github.event.inputs.ENV }}' PLATFORM='${{ github.event.inputs.PLATFORM }}'
 
