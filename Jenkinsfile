@@ -13,6 +13,7 @@ pipeline {
         stage('Trigger GitHub Actions Workflow') {
             steps {
                 // test
+                // test
                 withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                     sh '''
                     curl -X POST \
