@@ -14,6 +14,7 @@ pipeline {
             steps {
                 // test
                 // test
+                //test
                 withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
                     sh '''
                     curl -X POST \
